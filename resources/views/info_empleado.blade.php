@@ -17,7 +17,7 @@
                         <tr> 
                             <th style="padding-right:30px">Apellido</th>
                             <td>
-                                <input type="text" name="Apellido" class="form-control" placeholder="Apellido">
+                                <input type="text" name="apellido" class="form-control" placeholder="Apellido">
                             </td>
                         </tr>
                         <tr> 
