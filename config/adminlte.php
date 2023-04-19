@@ -309,7 +309,7 @@ return [
         ['header' => 'Gestion de Usuarios'],
         [
             'text' => 'Empleados',
-            'url'  => 'info_empleado',
+            'url'  => 'empleados',
             'icon' => 'fas fa-fw fa-user',
         ],
         [

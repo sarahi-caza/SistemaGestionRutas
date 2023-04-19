@@ -14,7 +14,10 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        //
+        $empleados = Empleado::paginate();
+
+        return view('empleados\index', compact('empleados'))
+            ->with('i', (request()->input('page', 1) - 1) * $empleados->perPage());
     }
 
     /**
@@ -24,62 +27,79 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        //
+        $empleado = new Empleado();
+        return view('form', compact('empleado'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+    //   request()->validate(Empleado::$rules);
+
+        $empleado = Empleado::create($request->all());
+
+        return redirect()->route('empleados.index')
+            ->with('success', 'Empleado created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Empleado  $empleado
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Empleado $empleado)
+    public function show($id)
     {
-        //
+        $empleado = Empleado::find($id);
+
+        return view('empleados\show', compact('empleado'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Empleado  $empleado
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empleado $empleado)
+    public function edit($id)
     {
-        //
+        $empleado = Empleado::find($id);
+
+        return view('empleados\edit', compact('empleado'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Empleado  $empleado
+     * @param  \Illuminate\Http\Request $request
+     * @param  Empleado $empleado
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Empleado $empleado)
     {
-        //
+    //    request()->validate(Empleado::$rules);
+
+        $empleado->update($request->all());
+
+        return redirect()->route('empleados.index')
+            ->with('success', 'Empleado updated successfully');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Empleado  $empleado
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function destroy(Empleado $empleado)
+    public function destroy($id)
     {
-        //
+        $empleado = Empleado::find($id)->delete();
+
+        return redirect()->route('empleados.index')
+            ->with('success', 'Empleado deleted successfully');
     }
 }
