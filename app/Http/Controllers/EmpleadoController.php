@@ -28,7 +28,7 @@ class EmpleadoController extends Controller
     public function create()
     {
         $empleado = new Empleado();
-        return view('form', compact('empleado'));
+        return view('empleados\form', compact('empleado'));
     }
 
     /**
@@ -70,7 +70,7 @@ class EmpleadoController extends Controller
     {
         $empleado = Empleado::find($id);
 
-        return view('empleados\edit', compact('empleado'));
+        return view('empleados\form', compact('empleado'));
     }
 
     /**
