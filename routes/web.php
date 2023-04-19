@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmpleadoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +38,5 @@ Route::get('/nuevo_horario', function () {
 Route::get('/selec_nuevo_horario', function () {
     return view('selec_nuevo_horario');
 });
+
+Route::resource('empleados', EmpleadoController::class);
