@@ -314,7 +314,7 @@ return [
         ],
         [
             'text' => 'Choferes',
-            'url'=> 'info_chofer',
+            'url'=> 'choferes',
             'icon' => 'fas fa-fw fa-user-nurse',
         ],
         [    
