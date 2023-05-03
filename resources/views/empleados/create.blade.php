@@ -1,52 +1,74 @@
-@extends('empleados.layout')
-
+@extends('adminlte::page')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Nuevo Empleado</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('empleados.index') }}"> Regresar</a>
-            </div>
+
+<div class="container" >
+    <div class="row justify-content-center">
+        <div class="col-md-8 card">
+            
+             <center>
+            <h3>Datos Personales Empleado</h3><br>
+            <div class="col-md-8 form-group">
+                <form action="{{ route('empleados.store') }}" method="POST">
+                @csrf
+                    <table>
+                        <tr> 
+                            <th style="padding-right:30px">Nombre</th>
+                            <td>
+                                <input type="text" value="{{ $empleado->nombre }}" name="nombre" class="form-control" placeholder="Nombre">
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th style="padding-right:30px">Apellido</th>
+                            <td>
+                                <input type="text" value="{{ $empleado->apellido }}" name="apellido" class="form-control" placeholder="Apellido">
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th style="padding-right:30px">Dirección</th>
+                            <td>
+                                <input type="text" value="{{ $empleado->direccion }}" name="direccion" class="form-control" placeholder="Dirección">
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th style="padding-right:30px">Celular</th>
+                            <td>
+                                <input type="text" value="{{ $empleado->celular }}" name="celular" class="form-control" placeholder="Celular">
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th style="padding-right:30px">Género</th>
+                            <td>
+                                <select name="genero" value="{{ $empleado->genero }}" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
+                                    <option selected>-Seleccione-</option>
+                                    <option value="F">Femenino</option>
+                                    <option value="M">Masculino</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th style="padding-right:30px">Área</th>
+                            <td>
+                                <select name="area" value="{{ $empleado->area }}" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
+                                    <option selected>-Seleccione-</option>
+                                    <option value="twr">TWR Torre de control</option>
+                                    <option value="app">APP Vigilancia Radar</option>
+                                    <option value="met">MET Meteorología</option>
+                                    <option value="ops">OPS Operaciones</option>
+                                    <option value="ais">AIS Información de Vuelo</option>
+                                </select>
+                            </td>
+                        </tr>
+                        
+                    </table>
+
+                        <br>
+                        <a class="btn btn-info" href="{{ route('empleados.index') }}">Regresar</a>
+                        <button type="submit" class="btn btn-primary" style="margin-left:100px">Guardar</button> 
+                    </form>
+                </div>
+            </center>
         </div>
     </div>
-
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> Existe un error al crear un nuevo empleado.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-
-    <form action="{{ route('empleados.store') }}" method="POST">
-    	@csrf
-
-
-         <div class="row">
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-		        <div class="form-group">
-		            <strong>Nombre:</strong>
-		            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
-		        </div>
-		    </div>
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-		        <div class="form-group">
-		            <strong>Apellido:</strong>
-		            <imput class="form-control" style="height:150px" name="apellido" placeholder="apellido">
-		        </div>
-		    </div>
-		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-		            <button type="submit" class="btn btn-primary">Guardar</button>
-		    </div>
-		</div>
-    </form>
-
+</div>
 @endsection

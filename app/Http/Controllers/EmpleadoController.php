@@ -28,7 +28,7 @@ class EmpleadoController extends Controller
     public function create()
     {
         $empleado = new Empleado();
-        return view('empleados\form', compact('empleado'));
+        return view('empleados\create', compact('empleado'));
     }
 
     /**
@@ -44,7 +44,7 @@ class EmpleadoController extends Controller
         $empleado = Empleado::create($request->all());
 
         return redirect()->route('empleados.index')
-            ->with('success', 'Empleado created successfully.');
+            ->with('success', 'Empleado creado con éxito.');
     }
 
     /**
@@ -70,7 +70,7 @@ class EmpleadoController extends Controller
     {
         $empleado = Empleado::find($id);
 
-        return view('empleados\form', compact('empleado'));
+        return view('empleados\edit', compact('empleado'));
     }
 
     /**
@@ -87,7 +87,7 @@ class EmpleadoController extends Controller
         $empleado->update($request->all());
 
         return redirect()->route('empleados.index')
-            ->with('success', 'Empleado updated successfully');
+            ->with('success', 'Empleado editado con éxito');
     }
 
     /**
@@ -100,6 +100,6 @@ class EmpleadoController extends Controller
         $empleado = Empleado::find($id)->delete();
 
         return redirect()->route('empleados.index')
-            ->with('success', 'Empleado deleted successfully');
+            ->with('success', 'Empleado eliminado con éxito');
     }
 }

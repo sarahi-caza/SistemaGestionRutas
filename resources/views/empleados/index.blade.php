@@ -1,11 +1,9 @@
-
-@extends('empleados.layout')
-
+@extends('adminlte::page')
 
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
+            <div style="text-align:center">
                 <h2>LISTA DE EMPLEADOS</h2><br>
             </div>
             <div class="pull-right">
@@ -23,19 +21,22 @@
     @endif
 
 
-    <table class="table table-info table table-sm ">
+    <table class="table table-info table table-sm">
         <tr>
-            <th>N°</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Dirección</th>
-            <th>Celular</th>
-            <th>Genero</th>
-            <th>Area</th>
-            <th width="280px">Action</th>
+            <thead class="table-dark">
+                <th>N°</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dirección</th>
+                <th>Celular</th>
+                <th>Género</th>
+                <th>Área</th>
+                <th style="text-align:center; width:150px">Acciones</th>
+            </thead>
         </tr>
 	    @foreach ($empleados as $empleado)
 	    <tr>
+
 	        <td>{{ ++$i }}</td>
 	        <td>{{ $empleado->nombre }}</td>
 	        <td>{{ $empleado->apellido }}</td>
@@ -45,11 +46,11 @@
             <td>{{ $empleado->area }}</td>
 	        <td>
                 <form action="{{ route('empleados.destroy',$empleado->id) }}" method="POST">
-                    <a class="btn btn-info" href="{{ route('empleados.show',$empleado->id) }}"><i class="fas fa-eye"></i> Show</a>
-                    <a class="btn btn-primary" href="{{ route('empleados.edit',$empleado->id) }}"><i class="fas fa-edit"></i> Edit</a>
+                    <a title="Mostrar" class="btn btn-info" href="{{ route('empleados.show',$empleado->id) }}"><i class="fas fa-eye"></i></a>
+                    <a title="Editar"class="btn btn-primary" href="{{ route('empleados.edit',$empleado->id) }}"><i class="fas fa-edit"></i></a>
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+                    <button title="Eliminar" type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                 </form>
 	        </td>
 	    </tr>
