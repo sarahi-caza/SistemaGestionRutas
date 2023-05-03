@@ -42,11 +42,11 @@
                                 </select>
                             </td>
                         </tr>
-                    </table>
-                        <br>
-                        <a class="btn btn-info" href="{{ route('choferes.index') }}"> Regresar</a>
-                        <button type="submit" class="btn btn-primary" style="margin-left:100px">Actualizar</button> 
-                    </form>
+                </table>
+                    <br>
+                    <a class="btn btn-info" href="{{ route('choferes.index') }}"> Regresar</a>
+                    <button type="submit" class="btn btn-primary" style="margin-left:100px">Actualizar</button> 
+                </form>
                 </div>
             </center>
         </div>

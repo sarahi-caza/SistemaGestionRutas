@@ -80,11 +80,11 @@ class ChoferController extends Controller
      * @param  Chofer $chofer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Chofer $chofer)
+    public function update(Request $request, Chofer $chofere)
     {
     //    request()->validate(Chofer::$rules);
 
-        $chofer->update($request->all());
+        $chofere->update($request->all());
 
         return redirect()->route('choferes.index')
             ->with('success', 'Chofer editado con éxito');

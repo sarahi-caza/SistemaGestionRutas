@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 card">
             
-             <center>
+            <center>
             <h3>Editar Datos Personales Empleado</h3><br>
             <div class="col-md-8 form-group">
                 <form action="{{ route('empleados.update',$empleado->id) }}" method="POST">
