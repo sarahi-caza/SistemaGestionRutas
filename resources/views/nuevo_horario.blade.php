@@ -5,8 +5,24 @@
     <div class="row justify-content-center">
         <div class="col-md-12 card">
             <center>
-                <h3>Ingrese Nuevo Horario de Trabajo</h3><br>
+                <h3>Ingrese Nuevo Horario de Trabajo</h3>
                 <div class="col-md-12 form-group table-responsive">
+                <table>
+                        <tr> 
+                        <th style="padding-right:30px">Área</th>
+                            <td>
+                                <select name="horario" onchange="location = this.value" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
+                                    <option selected>-Seleccione-</option>
+                                    <option value="nuevo_horario">TWR Torre de control</option>
+                                    <option value="nuevo_horario">APP Vigialncia Radar</option>
+                                    <option value="nuevo_horario">MET Meteorología</option>
+                                    <option value="nuevo_horario">OPS Operaciones</option>
+                                    <option value="nuevo_horario">AIS Información de Vuelo</option>
+                                </select>
+                            </td>
+                        </tr>
+                       
+                    </table><br>
                     <table class="table table-info table table-sm ">
                         <thead class="table-dark">
                             <tr>

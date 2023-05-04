@@ -35,3 +35,4 @@ Route::get('/selec_nuevo_horario', function () {
 
 Route::resource('empleados', EmpleadoController::class);
 Route::resource('choferes', ChoferController::class);
+Route::resource('horarios', HorarioController::class);
