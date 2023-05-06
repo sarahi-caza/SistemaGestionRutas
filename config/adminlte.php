@@ -342,7 +342,7 @@ return [
         [
             'text' => 'Nueva Ruta',
             'icon' => 'fas fa-fw fa-map-marked-alt',
-            'url'  => '#',
+            'url'  => 'rutas',
         ],
         ['header' => 'Perfil'],
         [
