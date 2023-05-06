@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 card">
             <center>
-                <br><br><h3>Ingrese Nuevo Horario de Trabajo</h3><br><br>
+                <br><br><h3>Seleccione Área para Nuevo Horario de Trabajo</h3><br><br>
                 <div class="col-md-8 form-group">
                     <table>
                         <tr> 
