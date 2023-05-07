@@ -28,6 +28,7 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Celular</th>
+                <th>Correo Electrónico</th>
                 <th>Sector</th>
                 <th style="text-align:center; width:150px">Acciones</th>
             </thead>
@@ -39,7 +40,8 @@
 	        <td>{{ $chofer->nombre }}</td>
 	        <td>{{ $chofer->apellido }}</td>
             <td>{{ $chofer->celular }}</td>
-	        <td>{{ $chofer->sector }}</td>
+            <td>{{ $chofer->correo }}</td>
+            <td>{{ $chofer->sector }}</td>
 	        <td>
                 <form action="{{ route('choferes.destroy',$chofer->id) }}" method="POST">
                     <a title="Mostrar" class="btn btn-info" href="{{ route('choferes.show',$chofer->id) }}"><i class="fas fa-eye"></i></a>

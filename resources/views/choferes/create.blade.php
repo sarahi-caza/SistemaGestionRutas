@@ -31,6 +31,12 @@
                             </td>
                         </tr>
                         <tr> 
+                            <th style="padding-right:30px">Correo Electrónico</th>
+                            <td>
+                                <input type="text" name="correo" class="form-control" placeholder="Correo Ëlectronico">
+                            </td>
+                        </tr>
+                        <tr> 
                             <th style="padding-right:30px">Sector</th>
                             <td>
                                 <select name="sector" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">

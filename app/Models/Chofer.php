@@ -24,6 +24,7 @@ class Chofer extends Eloquent
         'nombre',
         'apellido',
         'celular',
+        'correo',
         'sector',
     ];
 }
