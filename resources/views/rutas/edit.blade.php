@@ -7,58 +7,34 @@
         <div class="col-md-8 card">
             
             <center>
-            <h3>Editar Datos Personales Empleado</h3><br>
+            <h3>Editar Datos de Ruta</h3><br>
             <div class="col-md-8 form-group">
-                <form action="{{ route('empleados.update',$empleado->id) }}" method="POST">
+                <form action="{{ route('rutas.update',$ruta->id) }}" method="POST">
     	        @csrf
                 @method('PUT')
                     <table>
                         <tr> 
                             <th style="padding-right:30px">Nombre</th>
                             <td>
-                                <input type="text" value="{{ $empleado->nombre }}" name="nombre" class="form-control" placeholder="Nombre">
+                                <input type="text" value="{{ $ruta->nombre }}" name="nombre" class="form-control" placeholder="Nombre">
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Apellido</th>
+                            <th style="padding-right:30px">Código</th>
                             <td>
-                                <input type="text" value="{{ $empleado->apellido }}" name="apellido" class="form-control" placeholder="Apellido">
+                                <input type="text" Value="{{ $ruta->codigo }}" name="codigo" class="form-control" placeholder="Codigo">
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Dirección</th>
+                            <th style="padding-right:30px">Chofer</th>
                             <td>
-                                <input type="text" value="{{ $empleado->direccion }}" name="direccion" class="form-control" placeholder="Dirección">
-                            </td>
-                        </tr>
-                        <tr> 
-                            <th style="padding-right:30px">Celular</th>
-                            <td>
-                                <input type="text" value="{{ $empleado->celular }}" name="celular" class="form-control" placeholder="Celular">
-                            </td>
-                        </tr>
-                        <tr> 
-                            <th style="padding-right:30px">Género</th>
-                            <td>
-                                <select name="genero" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
-                                    <option value="F" @if($empleado->genero == "F") selected @endif> Femenino</option>
-                                    <option value="M" @if($empleado->genero == "M") selected @endif> Masculino</option>
+                                <select name="chofer" value="{{ $ruta->chofer }}" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
+                                    <option selected>-Seleccione-</option>
+                                    <option value="F">Femenino</option>
+                                    <option value="M">Masculino</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr> 
-                            <th style="padding-right:30px">Área</th>
-                            <td>
-                                <select name="area" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
-                                    <option value="twr" @if($empleado->area == "twr") selected @endif> TWR Torre de control</option>
-                                    <option value="app" @if($empleado->area == "app") selected @endif>APP Vigilancia Radar</option>
-                                    <option value="met" @if($empleado->area == "met") selected @endif>MET Meteorología</option>
-                                    <option value="ops" @if($empleado->area == "ops") selected @endif>OPS Operaciones</option>
-                                    <option value="ais" @if($empleado->area == "ais") selected @endif>AIS Información de Vuelo</option>
-                                </select>
-                            </td>
-                        </tr>
-                        
                     </table>
 
                         <br>

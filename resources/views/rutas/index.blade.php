@@ -26,11 +26,8 @@
             <thead class="table-dark">
                 <th>N°</th>
                 <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Dirección</th>
-                <th>Celular</th>
-                <th>Género</th>
-                <th>Área</th>
+                <th>Código</th>
+                <th>Chofer</th>
                 <th style="text-align:center; width:150px">Acciones</th>
             </thead>
         </tr>
@@ -39,7 +36,7 @@
 
 	        <td>{{ ++$i }}</td>
 	        <td>{{ $ruta->nombre }}</td>
-	        <td>{{ $ruta->código }}</td>
+	        <td>{{ $ruta->codigo }}</td>
             <td>{{ $ruta->chofer }}</td>
             <td>
                 <form action="{{ route('rutas.destroy',$ruta->id) }}" method="POST">

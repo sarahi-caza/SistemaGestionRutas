@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ChoferController;
-
+use App\Http\Controllers\RutaController;
 
 /*
 |--------------------------------------------------------------------------

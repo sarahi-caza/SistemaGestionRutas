@@ -7,9 +7,9 @@
         <div class="col-md-8 card">
             
              <center>
-            <h3>Datos Personales Empleado</h3><br>
+            <h3>Datos Rutas</h3><br>
             <div class="col-md-8 form-group">
-                <form action="{{ route('empleados.store') }}" method="POST">
+                <form action="{{ route('rutas.store') }}" method="POST">
                 @csrf
                     <table>
                         <tr> 
@@ -19,51 +19,25 @@
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Apellido</th>
+                            <th style="padding-right:30px">Código</th>
                             <td>
-                                <input type="text" name="apellido" class="form-control" placeholder="Apellido">
+                                <input type="text" name="codigo" class="form-control" placeholder="Codigo">
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Dirección</th>
+                            <th style="padding-right:30px">Chofer</th>
                             <td>
-                                <input type="text" name="direccion" class="form-control" placeholder="Dirección">
-                            </td>
-                        </tr>
-                        <tr> 
-                            <th style="padding-right:30px">Celular</th>
-                            <td>
-                                <input type="text" name="celular" class="form-control" placeholder="Celular">
-                            </td>
-                        </tr>
-                        <tr> 
-                            <th style="padding-right:30px">Género</th>
-                            <td>
-                                <select name="genero" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
+                                <select name="chofer" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
                                     <option selected>-Seleccione-</option>
                                     <option value="F">Femenino</option>
                                     <option value="M">Masculino</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr> 
-                            <th style="padding-right:30px">Área</th>
-                            <td>
-                                <select name="area" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
-                                    <option selected>-Seleccione-</option>
-                                    <option value="twr">TWR Torre de control</option>
-                                    <option value="app">APP Vigilancia Radar</option>
-                                    <option value="met">MET Meteorología</option>
-                                    <option value="ops">OPS Operaciones</option>
-                                    <option value="ais">AIS Información de Vuelo</option>
-                                </select>
-                            </td>
-                        </tr>
-                        
                     </table>
 
                         <br>
-                        <a class="btn btn-info" href="{{ route('empleados.index') }}">Regresar</a>
+                        <a class="btn btn-info" href="{{ route('rutas.index') }}">Regresar</a>
                         <button type="submit" class="btn btn-primary" style="margin-left:100px">Guardar</button> 
                     </form>
                 </div>
