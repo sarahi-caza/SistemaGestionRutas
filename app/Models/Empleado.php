@@ -23,6 +23,7 @@ class Empleado extends Eloquent
         'nombre',
         'apellido',
         'direccion',
+        'correo',
         'celular',
         'genero',
         'area',

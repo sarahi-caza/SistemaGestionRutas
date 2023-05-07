@@ -29,6 +29,12 @@
                             </td>
                         </tr>
                         <tr> 
+                            <th style="padding-right:30px">Correo Electrónico</th>
+                            <td>
+                                <input type="text" value="{{ $empleado->correo }}" name="correo" class="form-control" placeholder="Correo Ëlectronico" readonly>
+                            </td>
+                        </tr>
+                        <tr> 
                             <th style="padding-right:30px">Celular</th>
                             <td>
                                 <input type="text" value="{{ $empleado->celular }}" name="celular" class="form-control" placeholder="Celular" readonly>
