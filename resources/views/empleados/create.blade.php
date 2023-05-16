@@ -51,11 +51,11 @@
                             <td>
                                 <select name="area" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
                                     <option selected>-Seleccione-</option>
-                                    <option value="twr">TWR Torre de control</option>
-                                    <option value="app">APP Vigilancia Radar</option>
-                                    <option value="met">MET Meteorología</option>
-                                    <option value="ops">OPS Operaciones</option>
-                                    <option value="ais">AIS Información de Vuelo</option>
+                                    <option value="TWR">TWR Torre de control</option>
+                                    <option value="APP">APP Vigilancia Radar</option>
+                                    <option value="MET">MET Meteorología</option>
+                                    <option value="OPS">OPS Operaciones</option>
+                                    <option value="AIS">AIS Información de Vuelo</option>
                                 </select>
                             </td>
                         </tr>

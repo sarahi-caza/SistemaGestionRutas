@@ -324,12 +324,12 @@ return [
                 [
                     'text' => 'Nuevo horario',
                     'icon'    => 'fas fa-fw fa-calendar-plus',
-                    'url'  => 'selec_nuevo_horario',
+                    'url'  => 'horarios.select_area',
                 ],
                 [
                     'text' => 'Historial Horarios',
                     'icon'    => 'fas fa-fw fa-calendar-check',
-                    'url'  => 'nuevo_horario',
+                    'url'  => 'choferes',
                 ],
             ],
         ],

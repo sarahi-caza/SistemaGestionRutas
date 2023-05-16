@@ -47,11 +47,11 @@
                             <th style="padding-right:30px">Área</th>
                             <td>
                                 <select name="area" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" disabled>
-                                    <option value="twr" @if($empleado->area == "twr") selected @endif> TWR Torre de control</option>
-                                    <option value="app" @if($empleado->area == "app") selected @endif>APP Vigilancia Radar</option>
-                                    <option value="met" @if($empleado->area == "met") selected @endif>MET Meteorología</option>
-                                    <option value="ops" @if($empleado->area == "ops") selected @endif>OPS Operaciones</option>
-                                    <option value="ais" @if($empleado->area == "ais") selected @endif>AIS Información de Vuelo</option>
+                                    <option value="TWR" @if($empleado->area == "twr") selected @endif> TWR Torre de control</option>
+                                    <option value="APP" @if($empleado->area == "app") selected @endif>APP Vigilancia Radar</option>
+                                    <option value="MET" @if($empleado->area == "met") selected @endif>MET Meteorología</option>
+                                    <option value="OPS" @if($empleado->area == "ops") selected @endif>OPS Operaciones</option>
+                                    <option value="AIS" @if($empleado->area == "ais") selected @endif>AIS Información de Vuelo</option>
                                 </select>
                             </td>
                         </tr>
