@@ -35,12 +35,9 @@
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Género</th>
+                            <th style="padding-right:30px">Cédula</th>
                             <td>
-                            <select name="genero" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" disabled>
-                                    <option value="F" @if($empleado->genero == "F") selected @endif> Femenino</option>
-                                    <option value="M" @if($empleado->genero == "M") selected @endif> Masculino</option>
-                                </select>
+                            <input type="text" value="{{ $empleado->cedula }}" name="cedula" class="form-control" placeholder="Cédula" readonly>
                             </td>
                         </tr>
                         <tr> 

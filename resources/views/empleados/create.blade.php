@@ -39,11 +39,7 @@
                         <tr> 
                             <th style="padding-right:30px">Género</th>
                             <td>
-                                <select name="genero" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
-                                    <option selected>-Seleccione-</option>
-                                    <option value="F">Femenino</option>
-                                    <option value="M">Masculino</option>
-                                </select>
+                                <input type="text" name="cedula" class="form-control" placeholder="Cédula">
                             </td>
                         </tr>
                         <tr> 

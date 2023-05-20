@@ -24,7 +24,7 @@ class Empleado extends Eloquent
         'apellido',
         'direccion',
         'celular',
-        'genero',
+        'cedula',
         'area',
     ];
 }
