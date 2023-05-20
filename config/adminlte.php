@@ -344,10 +344,10 @@ return [
             'icon' => 'fas fa-fw fa-map-marked-alt',
             'url'  => '#',
         ],
-        ['header' => 'Perfil'],
+        ['header' => 'Reportería'],
         [
-            'text' => 'Configuración',
-            'icon' => 'fas fa-fw fa-cog',
+            'text' => 'Reportes',
+            'icon' => 'fas fa-fw fa-file',
             'url'  => '#',
             
         ],
