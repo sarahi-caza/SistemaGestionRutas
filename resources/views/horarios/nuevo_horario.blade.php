@@ -8,11 +8,12 @@
                 <h3>Ingrese Nuevo Horario de Trabajo</h3>
                 <div class="col-md-12 form-group table-responsive">
                 <form action="{{ route('horarios.store') }}" method="POST">
+                @csrf
                     <table>
                             <tr> 
                                 <th style="padding-right:30px">Área</th>
                                 <td style="padding-right:40px">
-                                    <select name="horario" onchange="location = this.value" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" disabled>
+                                    <select name="horario" onchange="location = this.value" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" readonly>
                                         <option value="TWR" @if($area == "TWR") selected @endif>TWR Torre de control</option>
                                         <option value="APP" @if($area == "APP") selected @endif>APP Vigilancia Radar</option>
                                         <option value="MET" @if($area == "MET") selected @endif>MET Meteorología</option>
