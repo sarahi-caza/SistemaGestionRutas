@@ -20,11 +20,7 @@ class Horario extends Eloquent
      * @var array
      */
     protected $fillable = [
-        'nombre',
-        'apellido',
-        'direccion',
-        'celular',
-        'genero',
-        'area',
+        'fecha',
+        'turno_semanal'
     ];
 }

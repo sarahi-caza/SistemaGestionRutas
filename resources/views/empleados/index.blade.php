@@ -27,9 +27,9 @@
                 <th>N°</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
+                <th>Cédula</th>
                 <th>Dirección</th>
                 <th>Celular</th>
-                <th>Cédula</th>
                 <th>Área</th>
                 <th style="text-align:center; width:150px">Acciones</th>
             </thead>
@@ -40,10 +40,10 @@
 	        <td>{{ ++$i }}</td>
 	        <td>{{ $empleado->nombre }}</td>
 	        <td>{{ $empleado->apellido }}</td>
+            <td>{{ $empleado->cedula }}</td>
             <td>{{ $empleado->direccion }}</td>
             <td>{{ $empleado->celular }}</td>
-	        <td>{{ $empleado->cedula }}</td>
-            <td>{{ $empleado->area }}</td>
+	        <td>{{ $empleado->area }}</td>
 	        <td>
                 <form action="{{ route('empleados.destroy',$empleado->id) }}" method="POST">
                     <a title="Mostrar" class="btn btn-info" href="{{ route('empleados.show',$empleado->id) }}"><i class="fas fa-eye"></i></a>

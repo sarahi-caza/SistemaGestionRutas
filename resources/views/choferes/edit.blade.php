@@ -26,9 +26,15 @@
                             </td>
                         </tr>
                         <tr> 
+                            <th style="padding-right:30px">Cédula</th>
+                            <td>
+                                <input type="text" value="{{ $chofer->cedula }}" name="cedula" class="form-control" placeholder="Cédula" maxlength="10">
+                            </td>
+                        </tr>
+                        <tr> 
                             <th style="padding-right:30px">Celular</th>
                             <td>
-                                <input type="text" value="{{ $chofer->celular }}" name="celular" class="form-control" placeholder="Celular">
+                                <input type="text" value="{{ $chofer->celular }}" name="celular" class="form-control" placeholder="Celular" maxlength="10">
                             </td>
                         </tr>
                         <tr> 

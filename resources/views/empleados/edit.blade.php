@@ -26,6 +26,12 @@
                             </td>
                         </tr>
                         <tr> 
+                            <th style="padding-right:30px">Cédula</th>
+                            <td>
+                                <input type="text" value="{{ $empleado->cedula }}" name="cedula" class="form-control" placeholder="Cédula" maxlength="10">
+                            </td>
+                        </tr>
+                        <tr> 
                             <th style="padding-right:30px">Dirección</th>
                             <td>
                                 <input type="text" value="{{ $empleado->direccion }}" name="direccion" class="form-control" placeholder="Dirección">
@@ -34,13 +40,7 @@
                         <tr> 
                             <th style="padding-right:30px">Celular</th>
                             <td>
-                                <input type="text" value="{{ $empleado->celular }}" name="celular" class="form-control" placeholder="Celular">
-                            </td>
-                        </tr>
-                        <tr> 
-                            <th style="padding-right:30px">Cédula</th>
-                            <td>
-                                <input type="text" value="{{ $empleado->cedula }}" name="cedula" class="form-control" placeholder="Cédula">
+                                <input type="text" value="{{ $empleado->celular }}" name="celular" class="form-control" placeholder="Celular" maxlength="10">
                             </td>
                         </tr>
                         <tr> 

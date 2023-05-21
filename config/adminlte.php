@@ -335,21 +335,21 @@ return [
         ],
         ['header' => 'Gestion de Rutas'],
         [
-            'text' => 'Asignar Rutas',
-            'icon' => 'fas fa-fw fa-route',
-            'url'  => '#',
-        ],
-        [
             'text' => 'Nueva Ruta',
             'icon' => 'fas fa-fw fa-map-marked-alt',
             'url'  => '#',
         ],
+        [
+            'text' => 'Asignar Rutas',
+            'icon' => 'fas fa-fw fa-route',
+            'url'  => '#',
+        ],
+
         ['header' => 'Reportería'],
         [
             'text' => 'Reportes',
             'icon' => 'fas fa-fw fa-file',
             'url'  => '#',
-            
         ],
     ],
 

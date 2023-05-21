@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 card">
             <center>
-                <h3>Seleccione Área para Nuevo Horario de Trabajo</h3>
+                <br><br><h3>Seleccione Área para Nuevo Horario de Trabajo</h3><br>
                 <div class="col-md-12 form-group">
                     <table>
                         <tr> 
@@ -33,7 +33,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script>
     $('#horario').on('change', function (e) {
-        console.log('hola22')
         var link = $("option:selected", this).val();
         if (link) {
             location.href = link;

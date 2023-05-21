@@ -27,6 +27,7 @@
                 <th>N°</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
+                <th>Cédula</th>
                 <th>Celular</th>
                 <th>Sector</th>
                 <th style="text-align:center; width:150px">Acciones</th>
@@ -38,6 +39,7 @@
 	        <td>{{ ++$i }}</td>
 	        <td>{{ $chofer->nombre }}</td>
 	        <td>{{ $chofer->apellido }}</td>
+            <td>{{ $chofer->cedula }}</td>
             <td>{{ $chofer->celular }}</td>
 	        <td>{{ $chofer->sector }}</td>
 	        <td>

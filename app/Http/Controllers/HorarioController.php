@@ -34,4 +34,23 @@ class HorarioController extends Controller
         return view('horarios.nuevo_horario', ['empleados' => $empleados, 'area'=> $area]);
 
     }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $fecha = $request->input('fecha');
+        $horario = Horario::create(
+            [
+                'fecha' => $fecha,
+            ]
+        );
+
+        return redirect()->route('horarios.select_area')
+            ->with('success', 'Horario creado con éxito.');
+    }
+
 }
