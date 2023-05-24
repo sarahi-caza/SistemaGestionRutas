@@ -38,7 +38,7 @@
                     </table>
 
                         <br>
-                        <a class="btn btn-info" href="{{ route('empleados.index') }}"> Regresar</a>
+                        <a class="btn btn-info" href="{{ route('rutas.index') }}"> Regresar</a>
                         <button type="submit" class="btn btn-primary" style="margin-left:100px">Actualizar</button> 
                     </form>
                 </div>
