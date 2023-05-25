@@ -26,7 +26,6 @@
             <thead class="table-dark">
                 <th>N°</th>
                 <th>Nombre</th>
-                <th>Código</th>
                 <th>Chofer</th>
                 <th style="text-align:center; width:150px">Acciones</th>
             </thead>
@@ -36,8 +35,7 @@
 
 	        <td>{{ ++$i }}</td>
 	        <td>{{ $ruta->nombre }}</td>
-	        <td>{{ $ruta->codigo }}</td>
-            <td>{{ $ruta->chofer }}</td>
+	        <td>{{ $ruta->chofer }}</td>
             <td>
                 <form action="{{ route('rutas.destroy',$ruta->id) }}" method="POST">
                     <a title="Mostrar" class="btn btn-info" href="{{ route('rutas.show',$ruta->id) }}"><i class="fas fa-eye"></i></a>

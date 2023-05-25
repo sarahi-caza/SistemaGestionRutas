@@ -19,22 +19,16 @@
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Código</th>
-                            <td>
-                                <input type="text" name="codigo" class="form-control" placeholder="Codigo">
-                            </td>
-                        </tr>
-                        <tr> 
                             <th style="padding-right:30px">Chofer</th>
                             <td>
                                 <select name="chofer" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
-                                    <option selected>-Seleccione-</option>
-                                    <option value="F">Femenino</option>
-                                    <option value="M">Masculino</option>
+                                    @foreach($choferes as $chof)
+                                        <option value="{{$chof['_id']}}">{{$chof['nombre'] }} {{$chof['apellido']}}</option>
+                                    @endforeach
                                 </select>
                             </td>
                         </tr>
-                    </table>
+                        </table>
 
                         <br>
                         <a class="btn btn-info" href="{{ route('rutas.index') }}">Regresar</a>

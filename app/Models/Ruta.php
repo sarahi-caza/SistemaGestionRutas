@@ -21,7 +21,6 @@ class Ruta extends Eloquent
      */
     protected $fillable = [
         'nombre',
-        'codigo',
         'chofer',
     ];
 }

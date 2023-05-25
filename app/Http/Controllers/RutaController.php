@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ruta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RutaController extends Controller
 {
@@ -15,8 +16,8 @@ class RutaController extends Controller
     public function index()
     {
         $rutas = Ruta::paginate();
-
-        return view('rutas\index', compact('rutas'))
+        $choferes = DB::table('choferes')->get();
+        return view('rutas\index', ['rutas' => $rutas, 'choferes' => $choferes])
             ->with('i', (request()->input('page', 1) - 1) * $rutas->perPage());
     }
 
@@ -28,7 +29,9 @@ class RutaController extends Controller
     public function create()
     {
         $ruta = new Ruta();
-        return view('rutas\create', compact('ruta'));
+        $choferes = DB::table('choferes')->get();
+        return view('rutas\create', [compact('ruta'), 'choferes' => $choferes]);
+        
     }
 
     /**
@@ -56,8 +59,8 @@ class RutaController extends Controller
     public function show($id)
     {
         $ruta = Ruta::find($id);
-
-        return view('rutas\show', compact('ruta'));
+        $choferes = DB::table('choferes')->get();
+        return view('rutas\edit', ['ruta' => $ruta, 'choferes' => $choferes]);
     }
 
     /**
@@ -69,8 +72,8 @@ class RutaController extends Controller
     public function edit($id)
     {
         $ruta = Ruta::find($id);
-
-        return view('rutas\edit', compact('ruta'));
+        $choferes = DB::table('choferes')->get();
+        return view('rutas\edit', ['ruta' => $ruta, 'choferes' => $choferes]);
     }
 
     /**

@@ -17,12 +17,6 @@
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Código</th>
-                            <td>
-                                <input type="text" Value="{{ $ruta->codigo }}" name="codigo" class="form-control" placeholder="Codigo" readonly>
-                            </td>
-                        </tr>
-                        <tr> 
                             <th style="padding-right:30px">Chofer</th>
                             <td>
                                 <select name="chofer" value="{{ $ruta->chofer }}" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" disabled>
