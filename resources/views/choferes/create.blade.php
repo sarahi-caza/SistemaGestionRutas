@@ -25,9 +25,15 @@
                             </td>
                         </tr>
                         <tr> 
+                            <th style="padding-right:30px">Cédula</th>
+                            <td>
+                                <input type="text" name="cedula" class="form-control" placeholder="Cédula" maxlength="10">
+                            </td>
+                        </tr>
+                        <tr> 
                             <th style="padding-right:30px">Celular</th>
                             <td>
-                                <input type="text" name="celular" class="form-control" placeholder="Celular">
+                                <input type="text" name="celular" class="form-control" placeholder="Celular" maxlength="10">
                             </td>
                         </tr>
                         <tr> 
@@ -43,6 +49,7 @@
                             </td>
                         </tr>
                     </table>
+                    <input type="hidden" id="pwdtemp" name="clave">
                         <br>
                         <a class="btn btn-info" href="{{ route('choferes.index') }}">Regresar</a>
                         <button type="submit" class="btn btn-primary" style="margin-left:100px">Guardar</button> 
@@ -52,4 +59,9 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+    $('#pwdtemp').val(Math.random().toString(36).substr(2, 6))
+</script>
 @endsection

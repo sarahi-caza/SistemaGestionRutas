@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ChoferController;
+use App\Http\Controllers\HorarioController;
 
 
 /*
@@ -25,13 +26,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //ruta a formulario ingreso nuevo horario
-Route::get('/nuevo_horario', function () {
-    return view('nuevo_horario');
-});
-//ruta a formulario ingreso nuevo horario selecionr area
-Route::get('/selec_nuevo_horario', function () {
-    return view('selec_nuevo_horario');
-});
+Route::get('/horarios.select_area', [HorarioController::class, 'index'])->name('horarios.select_area');
+Route::get('/horarios.nuevo_horario/{area}', [HorarioController::class, 'selectArea'])->name('horarios.nuevo_horario');
+Route::post('/horarios.store', [HorarioController::class, 'store'])->name('horarios.store');
 
 Route::resource('empleados', EmpleadoController::class);
 Route::resource('choferes', ChoferController::class);

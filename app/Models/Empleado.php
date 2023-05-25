@@ -22,10 +22,20 @@ class Empleado extends Eloquent
     protected $fillable = [
         'nombre',
         'apellido',
+        'cedula',
         'direccion',
         'celular',
-        'genero',
         'area',
+        'clave'
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'clave',
     ];
 }
 

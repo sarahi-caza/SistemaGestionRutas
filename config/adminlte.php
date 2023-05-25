@@ -324,32 +324,32 @@ return [
                 [
                     'text' => 'Nuevo horario',
                     'icon'    => 'fas fa-fw fa-calendar-plus',
-                    'url'  => 'selec_nuevo_horario',
+                    'url'  => 'horarios.select_area',
                 ],
                 [
                     'text' => 'Historial Horarios',
                     'icon'    => 'fas fa-fw fa-calendar-check',
-                    'url'  => 'nuevo_horario',
+                    'url'  => 'choferes',
                 ],
             ],
         ],
         ['header' => 'Gestion de Rutas'],
         [
-            'text' => 'Asignar Rutas',
-            'icon' => 'fas fa-fw fa-route',
-            'url'  => '#',
-        ],
-        [
             'text' => 'Nueva Ruta',
             'icon' => 'fas fa-fw fa-map-marked-alt',
             'url'  => '#',
         ],
-        ['header' => 'Perfil'],
         [
-            'text' => 'Configuración',
-            'icon' => 'fas fa-fw fa-cog',
+            'text' => 'Asignar Rutas',
+            'icon' => 'fas fa-fw fa-route',
             'url'  => '#',
-            
+        ],
+
+        ['header' => 'Reportería'],
+        [
+            'text' => 'Reportes',
+            'icon' => 'fas fa-fw fa-file',
+            'url'  => '#',
         ],
     ],
 
