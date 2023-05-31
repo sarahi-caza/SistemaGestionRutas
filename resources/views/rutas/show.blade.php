@@ -19,10 +19,10 @@
                         <tr> 
                             <th style="padding-right:30px">Chofer</th>
                             <td>
-                                <select name="chofer" value="{{ $ruta->chofer }}" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" disabled>
-                                    <option selected>-Seleccione-</option>
-                                    <option value="F">Femenino</option>
-                                    <option value="M">Masculino</option>
+                            <select name="chofer" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" disabled>
+                                    @foreach($choferes as $chof)
+                                        <option value="{{$chof['_id']}}" @if($chof['_id']==$ruta->chofer) selected @endif>{{$chof['nombre'] }} {{$chof['apellido']}}</option>
+                                    @endforeach
                                 </select>
                             </td>
                         </tr>    

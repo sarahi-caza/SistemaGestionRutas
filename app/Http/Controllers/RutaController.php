@@ -16,8 +16,14 @@ class RutaController extends Controller
     public function index()
     {
         $rutas = Ruta::paginate();
-        $choferes = DB::table('choferes')->get();
-        return view('rutas\index', ['rutas' => $rutas, 'choferes' => $choferes])
+        foreach($rutas as $ruta){
+            $chofer = DB::table('choferes')->where ('_id', $ruta->chofer)->first();
+            $ruta->chofer = $chofer['nombre'].'  '.$chofer['apellido'];
+        }
+        
+              
+        
+        return view('rutas\index', ['rutas' => $rutas])
             ->with('i', (request()->input('page', 1) - 1) * $rutas->perPage());
     }
 
@@ -60,7 +66,7 @@ class RutaController extends Controller
     {
         $ruta = Ruta::find($id);
         $choferes = DB::table('choferes')->get();
-        return view('rutas\edit', ['ruta' => $ruta, 'choferes' => $choferes]);
+        return view('rutas\show', ['ruta' => $ruta, 'choferes' => $choferes]);
     }
 
     /**
