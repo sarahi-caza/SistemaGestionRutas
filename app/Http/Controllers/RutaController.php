@@ -20,9 +20,7 @@ class RutaController extends Controller
             $chofer = DB::table('choferes')->where ('_id', $ruta->chofer)->first();
             $ruta->chofer = $chofer['nombre'].'  '.$chofer['apellido'];
         }
-        
-              
-        
+    
         return view('rutas\index', ['rutas' => $rutas])
             ->with('i', (request()->input('page', 1) - 1) * $rutas->perPage());
     }
