@@ -20,6 +20,16 @@ class HorarioController extends Controller
 
         return view('horarios.select_area');
     }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function historialHorarios(): View
+    {
+        return view('horarios.historial');
+    }
 
     /**
      * Display the specified resource.
@@ -42,9 +52,10 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
-        $empleados = DB::table('empleados')->where('area', $request->input('horario'))->get();
+        $area = $request->input('horario');
+        $empleados = DB::table('empleados')->where('area', $area)->get();
         $fecha = $request->input('fecha');
-
+        
         $empArray = [];
         foreach($empleados as $emp){
             $turnoSemanal = (object) [
@@ -63,7 +74,8 @@ class HorarioController extends Controller
         $horario = Horario::create(
             [
                 'fecha' => $fecha,
-                'turno_semanal' => $empArray
+                'turno_semanal' => $empArray,
+                'area' => $area
             ]
         );
 

@@ -329,7 +329,7 @@ return [
                 [
                     'text' => 'Historial Horarios',
                     'icon'    => 'fas fa-fw fa-calendar-check',
-                    'url'  => 'choferes',
+                    'url'  => 'horarios.historial',
                 ],
             ],
         ],

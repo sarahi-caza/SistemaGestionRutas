@@ -21,6 +21,7 @@ class Horario extends Eloquent
      */
     protected $fillable = [
         'fecha',
-        'turno_semanal'
+        'turno_semanal',
+        'area'
     ];
 }
