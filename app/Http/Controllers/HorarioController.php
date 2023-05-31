@@ -16,8 +16,6 @@ class HorarioController extends Controller
      */
     public function index(): View
     {
-        //$empleados = DB::table('empleados')->where('area','MET')->get();
-
         return view('horarios.select_area');
     }
     
@@ -28,7 +26,11 @@ class HorarioController extends Controller
      */
     public function historialHorarios(): View
     {
-        return view('horarios.historial');
+        $horarios = Horario::paginate();
+
+        return view('horarios\historial', compact('horarios'))
+            ->with('i', (request()->input('page', 1) - 1) * $horarios->perPage());
+    
     }
 
     /**
@@ -82,5 +84,59 @@ class HorarioController extends Controller
         return redirect()->route('horarios.select_area')
             ->with('success', 'Horario creado con éxito.');
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $horario = Horario::find($id);
 
+        return view('horarios\show', compact('horario'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $horario = Horario::find($id);
+
+        return view('horarios\edit', compact('horario'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Horario $horario
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Horario $horario)
+    {
+    //    request()->validate(Horario::$rules);
+
+        $horario->update($request->all());
+
+        return redirect()->route('horarios.index')
+            ->with('success', 'Horario editado con éxito');
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        $horario = Horario::find($id)->delete();
+
+        return redirect()->route('horarios.historial')
+            ->with('success', 'Horario eliminado con éxito');
+    }
 }

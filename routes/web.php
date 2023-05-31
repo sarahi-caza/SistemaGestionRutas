@@ -33,3 +33,4 @@ Route::get('/horarios.historial', [HorarioController::class, 'historialHorarios'
 
 Route::resource('empleados', EmpleadoController::class);
 Route::resource('choferes', ChoferController::class);
+Route::resource('horarios', HorarioController::class);
