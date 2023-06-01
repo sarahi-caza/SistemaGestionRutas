@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ChoferController;
+use App\Http\Controllers\RutaController;
 use App\Http\Controllers\HorarioController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +33,5 @@ Route::get('/horarios.historial', [HorarioController::class, 'historialHorarios'
 
 Route::resource('empleados', EmpleadoController::class);
 Route::resource('choferes', ChoferController::class);
+Route::resource('rutas', RutaController::class);
 Route::resource('horarios', HorarioController::class);

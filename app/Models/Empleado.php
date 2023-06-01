@@ -24,6 +24,7 @@ class Empleado extends Eloquent
         'apellido',
         'cedula',
         'direccion',
+        'correo',
         'celular',
         'area',
         'clave'

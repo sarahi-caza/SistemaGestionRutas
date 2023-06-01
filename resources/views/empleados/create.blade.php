@@ -37,6 +37,13 @@
                             </td>
                         </tr>
                         <tr> 
+                            <th style="padding-right:30px">Correo Electrónico</th>
+                            <td>
+                                <input type="text" name="correo" class="form-control" placeholder="Correo Ëlectronico">
+                            </td>
+                        </tr>
+                        
+                        <tr> 
                             <th style="padding-right:30px">Celular</th>
                             <td>
                                 <input type="text" name="celular" class="form-control" placeholder="Celular" maxlength="10">

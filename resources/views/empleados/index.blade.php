@@ -13,13 +13,11 @@
         </div>
     </div>
 
-
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
-
 
     <table class="table table-info table table-sm">
         <tr>
@@ -28,7 +26,8 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Cédula</th>
-                <th>Dirección</th>
+                <th style="text-align:center">Dirección</th>
+                <th>Correo Electrónico</th>
                 <th>Celular</th>
                 <th>Área</th>
                 <th style="text-align:center; width:150px">Acciones</th>
@@ -36,12 +35,12 @@
         </tr>
 	    @foreach ($empleados as $empleado)
 	    <tr>
-
 	        <td>{{ ++$i }}</td>
 	        <td>{{ $empleado->nombre }}</td>
 	        <td>{{ $empleado->apellido }}</td>
             <td>{{ $empleado->cedula }}</td>
             <td>{{ $empleado->direccion }}</td>
+            <td>{{ $empleado->correo }}</td>
             <td>{{ $empleado->celular }}</td>
 	        <td>{{ $empleado->area }}</td>
 	        <td>
@@ -56,6 +55,4 @@
 	    </tr>
 	    @endforeach
     </table>
-
-
 @endsection

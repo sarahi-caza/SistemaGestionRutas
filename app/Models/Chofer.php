@@ -25,6 +25,7 @@ class Chofer extends Eloquent
         'apellido',
         'cedula',
         'celular',
+        'correo',
         'sector',
         'clave'
     ];
