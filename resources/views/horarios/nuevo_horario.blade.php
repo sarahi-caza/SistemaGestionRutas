@@ -13,17 +13,18 @@
                             <tr> 
                                 <th style="padding-right:30px">Área</th>
                                 <td style="padding-right:40px">
-                                    <select name="horario" onchange="location = this.value" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" readonly>
+                                    <select name="area" onchange="location = this.value" class="form-select form-select-lg mb-3 form-control"  disabled>
                                         <option value="TWR" @if($area == "TWR") selected @endif>TWR Torre de control</option>
                                         <option value="APP" @if($area == "APP") selected @endif>APP Vigilancia Radar</option>
                                         <option value="MET" @if($area == "MET") selected @endif>MET Meteorología</option>
                                         <option value="OPS" @if($area == "OPS") selected @endif>OPS Operaciones</option>
                                         <option value="AIS" @if($area == "AIS") selected @endif>AIS Información de Vuelo</option>
                                     </select>
+                                    <input type="hidden" name="horario" value= "{{$area}}">
                                     </td>
                                 <th style="padding-right:30px">Seleccione Semana</th>
                                 <td style="padding-right:30px">
-                                <input type="text" name="fecha" class="daterange" style="width:200px" readonly>
+                                <input type="text" name="fecha" class="daterange form-control" style="width:200px" readonly>
                                 </td>
                             </tr>
 
