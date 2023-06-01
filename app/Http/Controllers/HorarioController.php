@@ -93,8 +93,13 @@ class HorarioController extends Controller
     public function show($id)
     {
         $horario = Horario::find($id);
+        $empleadosArray = [];
+        foreach ($horario->turno_semanal  as $turno) {
+            $empleado = DB::table('empleados')->where ('_id', $turno['empleado'])->first();
+            $empleadosArray +=[''.$turno['empleado']=> $empleado['nombre'].'  '.$empleado['apellido']];
+        }
 
-        return view('horarios\show', compact('horario'));
+        return view('horarios\show', ['horario' => $horario, 'empleadosArray' => $empleadosArray]);
     }
 
     /**
@@ -106,8 +111,12 @@ class HorarioController extends Controller
     public function edit($id)
     {
         $horario = Horario::find($id);
-
-        return view('horarios\edit', compact('horario'));
+        $empleadosArray = [];
+        foreach ($horario->turno_semanal  as $turno) {
+            $empleado = DB::table('empleados')->where ('_id', $turno['empleado'])->first();
+            $empleadosArray +=[''.$turno['empleado']=> $empleado['nombre'].'  '.$empleado['apellido']];
+        }
+        return view('horarios\edit', ['horario' => $horario, 'empleadosArray' => $empleadosArray]);
     }
 
     /**
@@ -121,9 +130,32 @@ class HorarioController extends Controller
     {
     //    request()->validate(Horario::$rules);
 
-        $horario->update($request->all());
+        $area = $request->input('horario');
+        $empleados = DB::table('empleados')->where('area', $area)->get();
+        //$fecha = $request->input('fecha');
+        
+        $empArray = [];
+        foreach($empleados as $emp){
+            $turnoSemanal = (object) [
+                'empleado' => $emp['_id'],
+                'lunes' => $request->input('lu-'.$emp['_id']),
+                'martes' => $request->input('ma-'.$emp['_id']),
+                'miercoles' => $request->input('mi-'.$emp['_id']),
+                'jueves' => $request->input('ju-'.$emp['_id']),
+                'viernes' => $request->input('vi-'.$emp['_id']),
+                'sabado' => $request->input('sa-'.$emp['_id']),
+                'domingo' => $request->input('do-'.$emp['_id']),
+            ];
+            array_push($empArray, $turnoSemanal);
+        }
+        
+        
+        //$horario1 = Horario::where('id', $horario->_id)->first();
+        $horario->update([
+            'turno_semanal' => $empArray,
+        ]);
 
-        return redirect()->route('horarios.index')
+        return redirect()->route('horarios.historial')
             ->with('success', 'Horario editado con éxito');
     }
 

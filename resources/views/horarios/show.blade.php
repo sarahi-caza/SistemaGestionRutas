@@ -45,7 +45,7 @@
                             <tbody>
                             @foreach($horario->turno_semanal as $turno)
                                 <tr>
-                                    <th>{{$turno['empleado']}}</th>
+                                    <th>{{$empleadosArray[''.$turno['empleado']]}}</th>
                                     <td>
                                         <select name="lu-{{$turno['empleado']}}" class="form-select form-select-sm mb-1 form-control" disabled>
                                             <option value= 'L' @if($turno['lunes']== "L") selected @endif>Libre</option>

@@ -7,8 +7,9 @@
             <center>
                 <h3>Edite Horario de Trabajo</h3>
                 <div class="col-md-12 form-group table-responsive">
-                <form action="{{ route('horarios.store') }}" method="POST">
+                <form action="{{ route('horarios.update', $horario) }}" method="POST">
                 @csrf
+                @method('PUT')
                     <table>
                             <tr> 
                                 <th style="padding-right:30px">Área</th>
@@ -45,7 +46,7 @@
                             <tbody>
                             @foreach($horario->turno_semanal as $turno)
                                 <tr>
-                                    <th>{{$turno['empleado']}}</th>
+                                    <th>{{$empleadosArray[''.$turno['empleado']]}}</th>
                                     <td>
                                         <select name="lu-{{$turno['empleado']}}" class="form-select form-select-sm mb-1 form-control">
                                             <option value= 'L' @if($turno['lunes']== "L") selected @endif>Libre</option>
