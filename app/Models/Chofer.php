@@ -23,8 +23,19 @@ class Chofer extends Eloquent
     protected $fillable = [
         'nombre',
         'apellido',
+        'cedula',
         'celular',
         'correo',
         'sector',
+        'clave'
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'clave',
     ];
 }

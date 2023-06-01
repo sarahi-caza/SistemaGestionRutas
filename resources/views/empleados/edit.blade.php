@@ -26,6 +26,12 @@
                             </td>
                         </tr>
                         <tr> 
+                            <th style="padding-right:30px">Cédula</th>
+                            <td>
+                                <input type="text" value="{{ $empleado->cedula }}" name="cedula" class="form-control" placeholder="Cédula" maxlength="10">
+                            </td>
+                        </tr>
+                        <tr> 
                             <th style="padding-right:30px">Dirección</th>
                             <td>
                                 <input type="text" value="{{ $empleado->direccion }}" name="direccion" class="form-control" placeholder="Dirección">
@@ -41,27 +47,18 @@
                         <tr> 
                             <th style="padding-right:30px">Celular</th>
                             <td>
-                                <input type="text" value="{{ $empleado->celular }}" name="celular" class="form-control" placeholder="Celular">
-                            </td>
-                        </tr>
-                        <tr> 
-                            <th style="padding-right:30px">Género</th>
-                            <td>
-                                <select name="genero" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
-                                    <option value="F" @if($empleado->genero == "F") selected @endif> Femenino</option>
-                                    <option value="M" @if($empleado->genero == "M") selected @endif> Masculino</option>
-                                </select>
+                                <input type="text" value="{{ $empleado->celular }}" name="celular" class="form-control" placeholder="Celular" maxlength="10">
                             </td>
                         </tr>
                         <tr> 
                             <th style="padding-right:30px">Área</th>
                             <td>
                                 <select name="area" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
-                                    <option value="twr" @if($empleado->area == "twr") selected @endif> TWR Torre de control</option>
-                                    <option value="app" @if($empleado->area == "app") selected @endif>APP Vigilancia Radar</option>
-                                    <option value="met" @if($empleado->area == "met") selected @endif>MET Meteorología</option>
-                                    <option value="ops" @if($empleado->area == "ops") selected @endif>OPS Operaciones</option>
-                                    <option value="ais" @if($empleado->area == "ais") selected @endif>AIS Información de Vuelo</option>
+                                    <option value="TWR" @if($empleado->area == "TWR") selected @endif> TWR Torre de control</option>
+                                    <option value="APP" @if($empleado->area == "APP") selected @endif>APP Vigilancia Radar</option>
+                                    <option value="MET" @if($empleado->area == "MET") selected @endif>MET Meteorología</option>
+                                    <option value="OPS" @if($empleado->area == "OPS") selected @endif>OPS Operaciones</option>
+                                    <option value="AIS" @if($empleado->area == "AIS") selected @endif>AIS Información de Vuelo</option>
                                 </select>
                             </td>
                         </tr>

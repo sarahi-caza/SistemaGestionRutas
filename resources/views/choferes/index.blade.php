@@ -27,6 +27,7 @@
                 <th>N°</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
+                <th>Cédula</th>
                 <th>Celular</th>
                 <th>Correo Electrónico</th>
                 <th>Sector</th>
@@ -39,6 +40,7 @@
 	        <td>{{ ++$i }}</td>
 	        <td>{{ $chofer->nombre }}</td>
 	        <td>{{ $chofer->apellido }}</td>
+            <td>{{ $chofer->cedula }}</td>
             <td>{{ $chofer->celular }}</td>
             <td>{{ $chofer->correo }}</td>
             <td>{{ $chofer->sector }}</td>
