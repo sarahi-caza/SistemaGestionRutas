@@ -25,7 +25,7 @@
                                     </td>
                                 <th style="padding-right:30px">Seleccione Semana</th>
                                 <td style="padding-right:30px">
-                                <input type="text" name="fecha" value="{{$horario->fecha}}" class="daterange" style="width:200px" disabled>
+                                <input type="text" name="fecha" value="{{$horario->fecha}}" class="daterange form-control" style="width:200px" disabled>
                                 </td>
                             </tr>
 

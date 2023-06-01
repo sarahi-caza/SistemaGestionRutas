@@ -24,7 +24,7 @@
                                     </td>
                                 <th style="padding-right:30px">Seleccione Semana</th>
                                 <td style="padding-right:30px">
-                                <input type="text" name="fecha" class="daterange" style="width:200px" readonly>
+                                <input type="text" name="fecha" class="daterange form-control" style="width:200px" readonly>
                                 </td>
                             </tr>
 
