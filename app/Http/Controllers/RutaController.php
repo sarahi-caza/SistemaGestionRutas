@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ruta;
+use App\Models\AsignacionRuta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -64,7 +65,9 @@ class RutaController extends Controller
     {
         $ruta = Ruta::find($id);
         $choferes = DB::table('choferes')->get();
-        return view('rutas\show', ['ruta' => $ruta, 'choferes' => $choferes]);
+        //consulta 1. asig_rutas con ruta Id
+        //consulta2. empleados  
+        return view('rutas\show', ['ruta' => $ruta, 'choferes' => $choferes]);//'agregar resultado de consulta 1
     }
 
     /**
@@ -94,7 +97,7 @@ class RutaController extends Controller
         $ruta->update($request->all());
 
         return redirect()->route('rutas.index')
-            ->with('success', 'Ruta editadacon éxito');
+            ->with('success', 'Ruta editada con éxito');
     }
 
     /**
@@ -108,5 +111,52 @@ class RutaController extends Controller
 
         return redirect()->route('rutas.index')
             ->with('success', 'Ruta eliminada con éxito');
+    }
+
+        /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function asignarRuta()
+    {
+        $rutas = DB::table('rutas')->get();
+        $empleados = DB::table('empleados')->get();
+        
+        return view('rutas\asignarRuta', ['rutas' => $rutas, 'empleados' => $empleados]);
+        
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeAsignarRuta(Request $request)
+    {
+        $rutas = DB::table('rutas')->get();
+        $empleados = DB::table('empleados')->get();
+        $asigRutasArray = [];
+        foreach($rutas as $ruta){
+            $asignacionRutas = DB::table('asig_rutas')->where('id_ruta', $ruta['_id'])->get();
+            if(count($asignacionRutas) == 0){
+                $asigRuta = AsignacionRuta::create([
+                    'id_ruta' => $ruta['_id'],
+                    'id_empleado' => [],
+                ]);
+            }
+            $asigRutasArray[''.$ruta['_id']] = [];
+            foreach($empleados as $emp){
+                $input = $request->input('asig-'.$emp['_id']);
+                if($ruta['_id'] == $input){
+                    array_push($asigRutasArray[''.$ruta['_id']], $emp['_id']);
+                }
+            }
+            $asignacionRuta = DB::table('asig_rutas')->where('id_ruta',$ruta['_id'])->update(['id_empleado' => $asigRutasArray[''.$ruta['_id']]]);
+        }
+    
+        return redirect()->route('rutas.index')
+            ->with('success', 'Asignación de Ruta exitosa.');
     }
 }

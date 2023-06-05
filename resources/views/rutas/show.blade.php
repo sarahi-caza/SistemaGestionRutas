@@ -27,7 +27,7 @@
                             </td>
                         </tr>    
                     </table>
-
+<!-- agregar tabla con lista de empleados desde la asignacion de rutas -->
                         <br>
                         <a class="btn btn-info" href="{{ route('rutas.index') }}">Regresar</a>
                 </div>
