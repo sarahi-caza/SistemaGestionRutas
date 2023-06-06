@@ -31,11 +31,12 @@
                     <h5>Lista de Empleados Asignados a la Ruta</h5>
                     <div class="col-md-8 form-group">
                     <table>
-<!-- agregar tabla con lista de empleados desde la asignacion de rutas -->
-                        @foreach($listaEmpleados as $emp )
-                            <tr>
-                                <td>{{$emp}}</td>
-                            </tr>
+                    <?php $i=0;?>
+                    @foreach($listaEmpleados as $emp )
+                        <tr>
+                            <td>{{++$i}}. </td>
+                            <td>{{$emp}}</td>
+                        </tr>
                         @endforeach
                     </table>
                     <br><br>

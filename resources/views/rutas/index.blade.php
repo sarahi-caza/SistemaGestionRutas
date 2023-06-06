@@ -20,24 +20,28 @@
         </div>
     @endif
 
-
     <table class="table table-info table table-sm">
         <tr>
             <thead class="table-dark">
-                <th>N°</th>
+                <th style="text-align:center">N°</th>
                 <th>Nombre</th>
                 <th>Chofer</th>
-                <th style="text-align:center; width:150px">Acciones</th>
+                <th style="text-align:center" >Empleados Asignados</th>
+                <th style="text-align:center; width:125px">Acciones</th>
             </thead>
         </tr>
 	    @foreach ($rutas as $ruta)
 	    <tr>
 
-	        <td>{{ ++$i }}</td>
-	        <td>{{ $ruta->nombre }}</td>
-	        <td>{{ $ruta->chofer }}</td>
-            <td>
+	        <td style="text-align:center; width: 10%">{{ ++$i }}</td>
+	        <td style="width: 25%">{{ $ruta->nombre }}</td>
+	        <td style="width: 25%">{{ $ruta->chofer }}</td>
+            <td style="text-align:center; width: 20%">{{ $ruta->numEmpleados }}</td>
+            <td style="text-align:right">
                 <form action="{{ route('rutas.destroy',$ruta->id) }}" method="POST">
+                    @if($ruta->numEmpleados != 0)
+                    <a title="ReAsignar" class="btn btn-secondary" href="{{ route('rutas.reAsignarRuta',$ruta->id) }}"><i class="fas fa-tasks"></i></a>
+                    @endif
                     <a title="Mostrar" class="btn btn-info" href="{{ route('rutas.show',$ruta->id) }}"><i class="fas fa-eye"></i></a>
                     <a title="Editar"class="btn btn-primary" href="{{ route('rutas.edit',$ruta->id) }}"><i class="fas fa-edit"></i></a>
                     @csrf

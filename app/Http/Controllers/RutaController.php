@@ -17,11 +17,20 @@ class RutaController extends Controller
     public function index()
     {
         $rutas = Ruta::paginate();
+        $asignaRutas = DB::table('asig_rutas')->get();
+        $asignaRuta = new AsignacionRuta();
         foreach($rutas as $ruta){
             $chofer = DB::table('choferes')->where ('_id', $ruta->chofer)->first();
             $ruta->chofer = $chofer['nombre'].'  '.$chofer['apellido'];
+            foreach($asignaRutas as $ar){
+                if($ar['id_ruta'] == $ruta['_id']){
+                    $asignaRuta=$ar;
+                    break;
+                } 
+            }
+            $ruta->numEmpleados = count($asignaRuta['id_empleado']);    
         }
-    
+        
         return view('rutas\index', ['rutas' => $rutas])
             ->with('i', (request()->input('page', 1) - 1) * $rutas->perPage());
     }
@@ -183,4 +192,94 @@ class RutaController extends Controller
         return redirect()->route('rutas.index')
             ->with('success', 'Asignación de Ruta exitosa.');
     }
-}
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    
+     public function reAsignarRuta($id)
+     {
+        $ruta = Ruta::find($id);
+        $asignaRutas = DB::table('asig_rutas')->get();
+        $asignaRuta = new AsignacionRuta();
+        foreach($asignaRutas as $ar ){
+            if($ar['id_ruta'] == $id){
+                $asignaRuta=$ar;
+                break;
+            }
+        }
+        $listaEmpleados=[];
+        foreach($asignaRuta['id_empleado'] as $emp){
+            $empleado = DB::table('empleados')->where('_id', $emp)->first();
+            array_push($listaEmpleados, $empleado); 
+        }        
+        
+        $rutas = DB::table('rutas')->get();
+
+         return view('rutas\reAsignarRuta', ['rutas' => $rutas, 'listaEmpleados' => $listaEmpleados, 'ruta' => $ruta]);
+     
+     }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeReAsignarRuta(Request $request)
+    {
+        $rutas = DB::table('rutas')->get();
+        $asignaRutas = DB::table('asig_rutas')->get();
+        $asignaRuta = new AsignacionRuta();
+        foreach($asignaRutas as $ar ){
+            if($ar['id_ruta'] == $request->input('ruta_actual')){
+                $asignaRuta=$ar;
+                break;
+            }   
+        }
+        $listaEmpleados=[];
+        foreach($asignaRuta['id_empleado'] as $emp){
+            $empleado = DB::table('empleados')->where('_id', $emp)->first();
+            array_push($listaEmpleados, $empleado); 
+        }
+        foreach($listaEmpleados as $emp){
+            $input = $request->input('asig-'.$emp['_id']);
+            if($request->input('ruta_actual') != $input){
+                //consulta y actualización empleados para ruta actual
+                $asigRutaActual = DB::table('asig_rutas')->get();
+                $asigRutaActual1 = new AsignacionRuta();
+                foreach($asigRutaActual as $ar1 ){
+                    if($ar1['id_ruta'] == $request->input('ruta_actual')){
+                        $asigRutaActual1=$ar1;
+                        break;
+                    }   
+                }
+                $nuevaListaEmpleados = [];
+                foreach($asigRutaActual1['id_empleado'] as $empl){
+                    if($empl != $emp['_id']){
+                        array_push($nuevaListaEmpleados, $empl);
+                    }
+                }
+                $asigRutaActualUpdate = DB::table('asig_rutas')->where('_id', $asigRutaActual1['_id'])->update(['id_empleado' => $nuevaListaEmpleados]);
+                
+                //consulta y actualización empleados para ruta nueva
+                $asigRutaNueva = DB::table('asig_rutas')->get();
+                $asigRutaNueva1 = new AsignacionRuta();
+                foreach($asigRutaNueva as $ar2 ){
+                    if($ar2['id_ruta'] == $input){
+                        $asigRutaNueva1=$ar2;
+                        break;
+                    }   
+                }
+                $nuevaListaEmpleadosRutaNueva = $asigRutaNueva1['id_empleado'];
+                array_push($nuevaListaEmpleadosRutaNueva, $emp['_id']);
+                $asigRutaNuevaUpdate = DB::table('asig_rutas')->where('_id', $asigRutaNueva1['_id'])->update(['id_empleado' => $nuevaListaEmpleadosRutaNueva]);
+                                
+            }
+        }
+        return redirect()->route('rutas.index')
+            ->with('success', 'Reasignación de Empleado a otra Ruta exitosa.');
+    }
+}   

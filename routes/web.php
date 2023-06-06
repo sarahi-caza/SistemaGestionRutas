@@ -35,6 +35,10 @@ Route::get('/horarios.historial', [HorarioController::class, 'historialHorarios'
 Route::get('/rutas.asignarRuta', [RutaController::class, 'asignarRuta'])->name('rutas.asignarRuta');
 Route::post('/rutas.storeAsignarRuta', [RutaController::class, 'storeAsignarRuta'])->name('rutas.storeAsignarRuta');
 
+//rutas para Re-asignar empleados a una ruta
+Route::get('/rutas.reAsignarRuta/{id}', [RutaController::class, 'reAsignarRuta'])->name('rutas.reAsignarRuta');
+Route::post('/rutas.storeReAsignarRuta', [RutaController::class, 'storeReAsignarRuta'])->name('rutas.storeReAsignarRuta');
+
 Route::resource('empleados', EmpleadoController::class);
 Route::resource('choferes', ChoferController::class);
 Route::resource('rutas', RutaController::class);
