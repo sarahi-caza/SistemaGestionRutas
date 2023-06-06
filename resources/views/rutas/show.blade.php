@@ -28,7 +28,7 @@
                         </tr>    
                     </table>
                     <br>
-                    <h5>Lista de Empleados asignados a la Ruta</h5>
+                    <h5>Lista de Empleados Asignados a la Ruta</h5>
                     <div class="col-md-8 form-group">
                     <table>
 <!-- agregar tabla con lista de empleados desde la asignacion de rutas -->

@@ -9,6 +9,7 @@
             <div class="col-md-8 form-group">
                 <form action="{{ route('rutas.storeAsignarRuta') }}" method="POST">
                 @csrf
+                @if(count($empleados) > 0)
                     <table class="table table-info table table-sm ">
                     <thead class="table-dark">
                         <tr> 
@@ -31,11 +32,16 @@
                         @endforeach
                     </tbody>    
                     </table>
-                        <br>
-                        <a class="btn btn-info" href="{{ route('rutas.index') }}">Regresar</a>
-                        <button type="submit" class="btn btn-primary" style="margin-left:100px">Guardar</button> 
-                    </form>
-                </div>
+                @else
+                    <p>No existen empleados pendientes de asignación a rutas</p>
+                @endif
+                    <br>
+                    <a class="btn btn-info" href="{{ route('rutas.index') }}">Regresar</a>
+                    @if(count($empleados) > 0)
+                    <button type="submit" class="btn btn-primary" style="margin-left:100px">Guardar</button> 
+                    @endif
+                </form>
+            </div>
             </center>
         </div>
     </div>

@@ -132,8 +132,16 @@ class RutaController extends Controller
     public function asignarRuta()
     {
         $rutas = DB::table('rutas')->get();
-        $empleados = DB::table('empleados')->get();
+        $asigRutas = DB::table('asig_rutas')->get();
         
+        $listaEmpleados=[];
+        foreach($asigRutas as $ar){
+            foreach($ar['id_empleado'] as $emp){
+                array_push($listaEmpleados, $emp); 
+            }
+        }
+        $empleados = DB::table('empleados')->whereNotIn('_id', $listaEmpleados)->get();
+            
         return view('rutas\asignarRuta', ['rutas' => $rutas, 'empleados' => $empleados]);
         
     }
@@ -158,6 +166,11 @@ class RutaController extends Controller
                 ]);
             }
             $asigRutasArray[''.$ruta['_id']] = [];
+            foreach($asignacionRutas as $ar){
+                foreach($ar['id_empleado'] as $empl){
+                    array_push($asigRutasArray[''.$ruta['_id']], $empl);
+                }
+            }
             foreach($empleados as $emp){
                 $input = $request->input('asig-'.$emp['_id']);
                 if($ruta['_id'] == $input){
