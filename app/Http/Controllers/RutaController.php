@@ -65,11 +65,22 @@ class RutaController extends Controller
     {
         $ruta = Ruta::find($id);
         $choferes = DB::table('choferes')->get();
-        //consulta 1. asig_rutas con ruta Id
-        //consulta2. empleados  
-        return view('rutas\show', ['ruta' => $ruta, 'choferes' => $choferes]);//'agregar resultado de consulta 1
+        $asignaRutas = DB::table('asig_rutas')->get();
+        $asignaRuta = new AsignacionRuta();
+        foreach($asignaRutas as $ar ){
+            if($ar['id_ruta'] == $id){
+                $asignaRuta=$ar;
+                break;
+            }
+        }
+        $listaEmpleados=[];
+        foreach($asignaRuta['id_empleado'] as $emp){
+            $empleado = DB::table('empleados')->where('_id', $emp)->first();
+            array_push($listaEmpleados, $empleado['nombre'].' '.$empleado['apellido']); 
+        }        
+        
+        return view('rutas\show', ['ruta' => $ruta, 'choferes' => $choferes, 'listaEmpleados' => $listaEmpleados]);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
