@@ -27,9 +27,20 @@
                             </td>
                         </tr>    
                     </table>
-
-                        <br>
-                        <a class="btn btn-info" href="{{ route('rutas.index') }}">Regresar</a>
+                    <br>
+                    <h5>Lista de Empleados Asignados a la Ruta</h5>
+                    <div class="col-md-8 form-group">
+                    <table>
+                    <?php $i=0;?>
+                    @foreach($listaEmpleados as $emp )
+                        <tr>
+                            <td>{{++$i}}. </td>
+                            <td>{{$emp}}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                    <br><br>
+                    <a class="btn btn-info" href="{{ route('rutas.index') }}">Regresar</a>
                 </div>
             </center>
         </div>
