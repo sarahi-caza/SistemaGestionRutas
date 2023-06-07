@@ -18,8 +18,9 @@ class RutaController extends Controller
     {
         $rutas = Ruta::paginate();
         $asignaRutas = DB::table('asig_rutas')->get();
-        $asignaRuta = new AsignacionRuta();
         foreach($rutas as $ruta){
+            $asignaRuta = new AsignacionRuta();
+            $asignaRuta['id_empleado'] = [];
             $chofer = DB::table('choferes')->where ('_id', $ruta->chofer)->first();
             $ruta->chofer = $chofer['nombre'].'  '.$chofer['apellido'];
             foreach($asignaRutas as $ar){
@@ -59,7 +60,6 @@ class RutaController extends Controller
     //   request()->validate(Ruta::$rules);
 
         $ruta = Ruta::create($request->all());
-
         return redirect()->route('rutas.index')
             ->with('success', 'Ruta creada con éxito.');
     }
@@ -267,11 +267,20 @@ class RutaController extends Controller
                 //consulta y actualización empleados para ruta nueva
                 $asigRutaNueva = DB::table('asig_rutas')->get();
                 $asigRutaNueva1 = new AsignacionRuta();
+                $existeAsigRuta = false;
                 foreach($asigRutaNueva as $ar2 ){
                     if($ar2['id_ruta'] == $input){
+                        $existeAsigRuta = true;
                         $asigRutaNueva1=$ar2;
                         break;
                     }   
+                }
+                if(!$existeAsigRuta ){
+                    $crearAsigRuta = AsignacionRuta::create([
+                        'id_ruta' => $input,
+                        'id_empleado' => [],
+                    ]);
+                    $asigRutaNueva1 = $crearAsigRuta;   
                 }
                 $nuevaListaEmpleadosRutaNueva = $asigRutaNueva1['id_empleado'];
                 array_push($nuevaListaEmpleadosRutaNueva, $emp['_id']);

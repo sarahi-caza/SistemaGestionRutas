@@ -25,7 +25,7 @@
                         <tr> 
                             <th style="padding-right:30px">Cédula</th>
                             <td>
-                            <input type="text" value="{{ $empleado->cedula }}" name="cedula" class="form-control" placeholder="Cédula" readonly>
+                            <input type="text" value="{{ $chofer->cedula }}" name="cedula" class="form-control" placeholder="Cédula" readonly>
                             </td>
                         </tr>
                         <tr> 
