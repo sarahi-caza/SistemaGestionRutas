@@ -35,8 +35,6 @@ class Empleado extends Eloquent
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'clave',
-    ];
+   
 }
 
