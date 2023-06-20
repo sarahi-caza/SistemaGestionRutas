@@ -32,6 +32,7 @@ class ApiController extends Controller
                 'celular' => $empleado['celular'],
                 'area' => $empleado['area'],
                 'rol' => 'empleado',
+                'actualizarClave' => $empleado['actualizarClave'],
             ]);
         }
 
@@ -46,6 +47,8 @@ class ApiController extends Controller
                 'apellido' => $chofer['apellido'],
                 'celular' => $chofer['celular'],
                 'rol' => 'chofer',
+                'actualizarClave' => $chofer['actualizarClave'],
+
             ]);
         }
 
