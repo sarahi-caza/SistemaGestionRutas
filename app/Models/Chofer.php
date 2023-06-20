@@ -27,7 +27,8 @@ class Chofer extends Eloquent
         'celular',
         'correo',
         'sector',
-        'clave'
+        'clave',
+        'actualizarClave'
     ];
 
     /**

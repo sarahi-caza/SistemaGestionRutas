@@ -40,8 +40,9 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
     //   request()->validate(Empleado::$rules);
-
-        $empleado = Empleado::create($request->all());
+        $requestData = $request->all(); 
+        $requestData['actualizarClave']= true;
+        $empleado = Empleado::create($requestData);
 
         return redirect()->route('empleados.index')
             ->with('success', 'Empleado creado con éxito.');

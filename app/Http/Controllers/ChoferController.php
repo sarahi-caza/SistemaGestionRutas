@@ -40,8 +40,10 @@ class ChoferController extends Controller
     public function store(Request $request)
     {
     //   request()->validate(Chofer::$rules);
-
-        $chofer = Chofer::create($request->all());
+        
+        $requestData = $request->all(); 
+        $requestData['actualizarClave']= true;
+        $chofer = Chofer::create($requestData);
 
         return redirect()->route('choferes.index')
             ->with('success', 'Chofer creado con éxito.');
