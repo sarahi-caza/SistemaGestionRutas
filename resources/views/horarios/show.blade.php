@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12 card">
             <center>
-                <h3>Edite Horario de Trabajo</h3>
+                <h3>Horario de Trabajo</h3>
                 <div class="col-md-12 form-group table-responsive">
                 <form action="{{ route('horarios.store') }}" method="POST">
                 @csrf
@@ -119,7 +119,7 @@
 	$('.daterange').daterangepicker({
         
     "locale": {
-        "format": "MM/DD/YYYY",
+        "format": "DD/MM/YYYY",
         "separator": " - ",
         "applyLabel": "Aplicar",
         "cancelLabel": "Cancelar",

@@ -30,3 +30,4 @@ Route::post('getHorario', [ApiController::class, 'getHorario'])->middleware('aut
 Route::post('actualizarPwd', [ApiController::class, 'actualizarPwd'])->middleware('auth:sanctum');
 Route::post('listaRecorrido', [ApiController::class, 'listaRecorrido'])->middleware('auth:sanctum');
 Route::post('ubicacionCasa', [ApiController::class, 'ubicacionCasa'])->middleware('auth:sanctum');
+Route::post('olvidoClave', [ApiController::class, 'olvidoClave'])->middleware('auth:sanctum');

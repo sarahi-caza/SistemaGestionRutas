@@ -117,8 +117,17 @@ class ApiController extends Controller
             }
 
         }
-
         if ($turnoActual){
+            $diasArray = ['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];
+            foreach($diasArray as $dia){
+                if($turnoActual[$dia] == 'M'){
+                    $turnoActual[$dia] = 'Mañana';
+                } elseif($turnoActual[$dia] == 'N'){
+                    $turnoActual[$dia] = 'Noche';
+                } else{
+                    $turnoActual[$dia] = 'Libre';
+                }
+            }
             return response()->json([
                 'status' => 'success',
                 'message' => 'Horario semanal encontrado',
@@ -128,7 +137,7 @@ class ApiController extends Controller
                 'jueves' => $turnoActual['jueves'],
                 'viernes' => $turnoActual['viernes'],
                 'sabado' => $turnoActual['sabado'],
-                'doming' => $turnoActual['domingo'],
+                'domingo' => $turnoActual['domingo'],
                 ]);
         }
 
@@ -242,5 +251,39 @@ class ApiController extends Controller
         }
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function olvidoClave(Request $request)
+    {
+
+        $empleado = DB::table('empleados')->where('cedula',$request->cedula)->first();
+        
+        if ($empleado && $empleado['cedula'] == $request->cedula) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Email de usuario encontrado',
+                'email' => $empleado['correo']
+            ]);
+        }
+
+        $chofer = DB::table('choferes')->where('cedula',$request->cedula)->first();
+        
+        if ($chofer && $chofer['cedula'] == $request->cedula) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Email de usuario encontrado',
+                'email' => $chofer['correo']
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Usuario no encontrado',
+            ], 400);
+    }
 
 }
