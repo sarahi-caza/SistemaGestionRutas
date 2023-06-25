@@ -29,6 +29,7 @@ class ApiController extends Controller
                 'id_usuario' => (string) $empleado['_id'],
                 'nombre' => $empleado['nombre'],
                 'apellido' => $empleado['apellido'],
+                'cedula' => $empleado['cedula'],
                 'celular' => $empleado['celular'],
                 'area' => $empleado['area'],
                 'rol' => 'empleado',
@@ -45,6 +46,7 @@ class ApiController extends Controller
                 'id_usuario' => (string) $chofer['_id'],
                 'nombre' => $chofer['nombre'],
                 'apellido' => $chofer['apellido'],
+                'cedula' => $chofer['cedula'],
                 'celular' => $chofer['celular'],
                 'rol' => 'chofer',
                 'actualizarClave' => $chofer['actualizarClave'],
@@ -66,14 +68,14 @@ class ApiController extends Controller
     public function actualizarPwd(Request $request)
     {
         if($request->rol == 'empleado'){
-            $empleado = DB::table('empleados')->where('_id',$request->id_usuario)->update(['clave' => $request->newPwd ]); 
+            $empleado = DB::table('empleados')->where('_id',$request->id_usuario)->update(['clave' => $request->newPwd, 'actualizarClave' => false]); 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Contraseña actualizada exitosamente'
             ]);
         }
         elseif($request->rol == 'chofer'){
-            $chofer = DB::table('choferes')->where('_id',$request->id_usuario)->update(['clave' => $request->newPwd]);
+            $chofer = DB::table('choferes')->where('_id',$request->id_usuario)->update(['clave' => $request->newPwd, 'actualizarClave' => false]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Contraseña actualizada exitosamente'
@@ -259,20 +261,24 @@ class ApiController extends Controller
      */
     public function olvidoClave(Request $request)
     {
-
-        $empleado = DB::table('empleados')->where('cedula',$request->cedula)->first();
+        $caracteres = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $clave = substr(str_shuffle($caracteres), 0, 6);
         
+        $empleado = DB::table('empleados')->where('cedula',$request->cedula)->first();
         if ($empleado && $empleado['cedula'] == $request->cedula) {
+            DB::table('empleados')->where('cedula',$request->cedula)->update(['clave' => $clave, 'actualizarClave' => true]); 
+            //envio de clave por correo
             return response()->json([
                 'status' => 'success',
                 'message' => 'Email de usuario encontrado',
-                'email' => $empleado['correo']
+                'email' => $empleado['correo'],
+                'clave' => $clave
             ]);
         }
 
         $chofer = DB::table('choferes')->where('cedula',$request->cedula)->first();
-        
         if ($chofer && $chofer['cedula'] == $request->cedula) {
+            DB::table('choferes')->where('cedula',$request->cedula)->update(['clave' => $clave, 'actualizarClave' => true]); 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Email de usuario encontrado',
