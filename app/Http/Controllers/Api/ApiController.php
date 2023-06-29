@@ -21,8 +21,12 @@ class ApiController extends Controller
     {
 
         $empleado = DB::table('empleados')->where('cedula',$request->cedula)->first();
+        $ubicacion = null;
         
         if ($empleado && $empleado['clave'] == $request->clave ) {
+            if(isset($empleado['ubicacion'])){
+                $ubicacion = $empleado['ubicacion'];
+            }
             return response()->json([
                 'status' => 'success',
                 'message' => 'Empleado encontrado',
@@ -32,6 +36,7 @@ class ApiController extends Controller
                 'cedula' => $empleado['cedula'],
                 'celular' => $empleado['celular'],
                 'area' => $empleado['area'],
+                'ubicacion' => $ubicacion,
                 'rol' => 'empleado',
                 'actualizarClave' => $empleado['actualizarClave'],
             ]);
@@ -40,6 +45,9 @@ class ApiController extends Controller
         $chofer = DB::table('choferes')->where('cedula',$request->cedula)->first();
 
         if ($chofer && $chofer['clave'] == $request->clave ) {
+            if(isset($chofer['ubicacion'])){
+                $ubicacion = $chofer['ubicacion'];
+            }
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chofer encontrado',
@@ -48,6 +56,7 @@ class ApiController extends Controller
                 'apellido' => $chofer['apellido'],
                 'cedula' => $chofer['cedula'],
                 'celular' => $chofer['celular'],
+                'ubicacion' => $ubicacion,
                 'rol' => 'chofer',
                 'actualizarClave' => $chofer['actualizarClave'],
 
@@ -98,17 +107,17 @@ class ApiController extends Controller
         $horarios = DB::table('horarios')->where('area',$request->area)->get();
         $horarioActual = new Horario();
         foreach ($horarios as $horario){
-            $arrayFecha= explode(' - ',$horario['fecha']);
-            $fechaInicio= $arrayFecha[0];
-            $fechaInicio= date($fechaInicio);
-            $fechaActual = date('d/m/Y');
-            $fechaFin= $arrayFecha[1]; 
-            $fechaFin= date($fechaFin);
+            $arrayFecha= explode(' - ', $horario['fecha']);
+            $arrayFechaInicio= explode('/', $arrayFecha[0]);
+            $fechaInicio= mktime(0,0,0,$arrayFechaInicio[1],$arrayFechaInicio[0],$arrayFechaInicio[2]);
+            $arrayFechaFin= explode('/', $arrayFecha[1]);
+            $fechaFin= mktime(0,0,0,$arrayFechaFin[1],$arrayFechaFin[0],$arrayFechaFin[2]);
+            $fechaActual = strtotime(date('d-m-Y'));
             
             if($fechaInicio <= $fechaActual && $fechaFin >= $fechaActual){
                 $horarioActual=$horario;
                 break;
-            }
+            } 
         }
 
         $turnoActual;
@@ -178,12 +187,12 @@ class ApiController extends Controller
         $horarios = DB::table('horarios')->get();
         $horarioArray = [];
         foreach ($horarios as $horario){
-            $arrayFecha= explode(' - ',$horario['fecha']);
-            $fechaInicio= $arrayFecha[0];
-            $fechaInicio= date($fechaInicio);
-            $fechaActual = date('d/m/Y');
-            $fechaFin= $arrayFecha[1]; 
-            $fechaFin= date($fechaFin);
+            $arrayFecha= explode(' - ', $horario['fecha']);
+            $arrayFechaInicio= explode('/', $arrayFecha[0]);
+            $fechaInicio= mktime(0,0,0,$arrayFechaInicio[1],$arrayFechaInicio[0],$arrayFechaInicio[2]);
+            $arrayFechaFin= explode('/', $arrayFecha[1]);
+            $fechaFin= mktime(0,0,0,$arrayFechaFin[1],$arrayFechaFin[0],$arrayFechaFin[2]);
+            $fechaActual = strtotime(date('d-m-Y'));
             
             if($fechaInicio <= $fechaActual && $fechaFin >= $fechaActual){
                 array_push($horarioArray, $horario);
