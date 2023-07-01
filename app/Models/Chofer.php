@@ -29,7 +29,8 @@ class Chofer extends Eloquent
         'sector',
         'clave',
         'actualizarClave',
-        'actualizarUbicacion'
+        'actualizarUbicacion',
+        'ubicación'
     ];
 
     /**

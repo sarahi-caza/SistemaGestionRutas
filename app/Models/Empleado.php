@@ -29,7 +29,8 @@ class Empleado extends Eloquent
         'area',
         'clave',
         'actualizarClave',
-        'actualizarUbicacion'
+        'actualizarUbicacion',
+        'ubicación'
     ];
 
     /**
