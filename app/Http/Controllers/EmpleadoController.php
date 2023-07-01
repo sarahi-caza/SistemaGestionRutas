@@ -42,6 +42,7 @@ class EmpleadoController extends Controller
     //   request()->validate(Empleado::$rules);
         $requestData = $request->all(); 
         $requestData['actualizarClave']= true;
+        $requestData['actualizarUbicacion']= true;
         $empleado = Empleado::create($requestData);
 
         return redirect()->route('empleados.index')

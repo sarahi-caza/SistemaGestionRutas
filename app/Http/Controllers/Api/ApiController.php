@@ -39,6 +39,7 @@ class ApiController extends Controller
                 'ubicacion' => $ubicacion,
                 'rol' => 'empleado',
                 'actualizarClave' => $empleado['actualizarClave'],
+                'actualizarUbicacion' => $empleado['actualizarUbicacion'],
             ]);
         }
 
@@ -59,7 +60,7 @@ class ApiController extends Controller
                 'ubicacion' => $ubicacion,
                 'rol' => 'chofer',
                 'actualizarClave' => $chofer['actualizarClave'],
-
+                'actualizarUbicacion' => $chofer['actualizarUbicacion'],
             ]);
         }
 
@@ -241,14 +242,14 @@ class ApiController extends Controller
             'longitud'=> $request->longitud
         ];
         if($request->rol == 'empleado'){
-            $empleado = DB::table('empleados')->where('_id',$request->id_usuario)->update(['ubicacion' => $ubicacion]); 
+            $empleado = DB::table('empleados')->where('_id',$request->id_usuario)->update(['ubicacion' => $ubicacion, 'actualizarUbicacion' => false]); 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Ubicación guardada exitosamente'
             ]);
         }
         elseif($request->rol == 'chofer'){
-            $chofer = DB::table('choferes')->where('_id',$request->id_usuario)->update(['ubicacion' => $ubicacion]);
+            $chofer = DB::table('choferes')->where('_id',$request->id_usuario)->update(['ubicacion' => $ubicacion, 'actualizarUbicacion' => false]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Ubicación guardada exitosamente'

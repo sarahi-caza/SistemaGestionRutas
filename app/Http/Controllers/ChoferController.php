@@ -43,6 +43,7 @@ class ChoferController extends Controller
         
         $requestData = $request->all(); 
         $requestData['actualizarClave']= true;
+        $requestData['actualizarUbicacion']= true;
         $chofer = Chofer::create($requestData);
 
         return redirect()->route('choferes.index')
