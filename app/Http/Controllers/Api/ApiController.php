@@ -159,7 +159,7 @@ class ApiController extends Controller
             ], 400);
     }
 
-        /**
+    /**
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -211,17 +211,27 @@ class ApiController extends Controller
         $nombreEmpleadosArray=[];
         foreach($empleados as $empleado){
             if(in_array ($empleado['_id'], $empleadosTurnoArray)){
-            array_push($nombreEmpleadosArray, $empleado['nombre'].' '.$empleado['apellido']);
+                if(isset($empleado['ubicacion'])){
+                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion']];
+                } else {
+                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido']];
+                }
+                array_push($nombreEmpleadosArray, $emp);
             }
         }
         $chofer = DB::table('choferes')->where('_id', $ruta['chofer'])->first();
         if($chofer && $ruta){
+            $ubicacionChofer=[];
+            if(isset($chofer['ubicacion'])){
+                $ubicacionChofer= $chofer['ubicacion'];
+            }
             return response()->json([
                 'status' => 'success',
                 'message' => 'Datos de ruta encontrados',
                 'lista_empleados' => $nombreEmpleadosArray,
                 'nombre_ruta' => $ruta['nombre'],
-                'nombre_chofer' => $chofer['nombre'].' '.$chofer['apellido']
+                'nombre_chofer' => $chofer['nombre'].' '.$chofer['apellido'],
+                'ubicacionChofer' => $ubicacionChofer
             ]);
         }
 
@@ -302,4 +312,78 @@ class ApiController extends Controller
             ], 400);
     }
 
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function listaRecorridoChofer(Request $request)
+    {
+        $ruta = DB::table('rutas')->where('chofer', $request->id_usuario)->first();
+        $asigRutaActual = DB::table('asig_rutas')->where('id_ruta', $ruta['_id'])->first(); 
+
+        $empIdArray =[];
+        foreach ($asigRutaActual['id_empleado'] as $emp1) {
+            array_push($empIdArray, (string) $emp1);
+
+        }    
+        $empleados = DB::table('empleados')->whereIn('_id',$empIdArray)->get();
+        
+        $horarios = DB::table('horarios')->get();
+        $horarioArray = [];
+        foreach ($horarios as $horario){
+            $arrayFecha= explode(' - ', $horario['fecha']);
+            $arrayFechaInicio= explode('/', $arrayFecha[0]);
+            $fechaInicio= mktime(0,0,0,$arrayFechaInicio[1],$arrayFechaInicio[0],$arrayFechaInicio[2]);
+            $arrayFechaFin= explode('/', $arrayFecha[1]);
+            $fechaFin= mktime(0,0,0,$arrayFechaFin[1],$arrayFechaFin[0],$arrayFechaFin[2]);
+            $fechaActual = strtotime(date('d-m-Y'));
+            
+            if($fechaInicio <= $fechaActual && $fechaFin >= $fechaActual){
+                array_push($horarioArray, $horario);
+            }
+        }
+        $empMatutinoArray = [];
+        $empNocturnoArray = [];
+        foreach($horarioArray as $hor){
+            foreach($hor['turno_semanal'] as $turno){
+                if(in_array((string) $turno['empleado'], $empIdArray)){
+                    if($turno[$request->dia] == 'M' ){
+                        array_push($empMatutinoArray, (string) $turno['empleado']);
+                    }
+                    else if($turno[$request->dia] == 'N' ){
+                        array_push($empNocturnoArray, (string) $turno['empleado']);
+                    }
+                }
+                
+            }
+        }
+        
+       /* $nombreEmpleadosArray=[];
+        foreach($empleados as $empleado){
+            if(in_array ($empleado['_id'], $empleadosTurnoArray)){
+                if(isset($empleado['ubicacion'])){
+                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion']];
+                } else {
+                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido']];
+                }
+                array_push($nombreEmpleadosArray, $emp);
+            }
+        }*/
+        if($ruta){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Datos de ruta encontrados',
+                'lista_matutina' => count($empMatutinoArray),
+                'lista_nocturna' => count($empNocturnoArray),
+                'nombre_ruta' => $ruta['nombre']
+            ]);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Datos de ruta no encontrados',
+            ], 400);
+        
+    }
+
 }
+
