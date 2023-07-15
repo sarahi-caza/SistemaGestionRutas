@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Chofer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 
 class ChoferController extends Controller
 {
@@ -45,6 +47,7 @@ class ChoferController extends Controller
         $requestData['actualizarClave']= true;
         $requestData['actualizarUbicacion']= true;
         $chofer = Chofer::create($requestData);
+        Mail::to($requestData['correo'])->send(new \App\Mail\SendEmail($requestData['nombre'], $requestData['clave']));
 
         return redirect()->route('choferes.index')
             ->with('success', 'Chofer creado con éxito.');

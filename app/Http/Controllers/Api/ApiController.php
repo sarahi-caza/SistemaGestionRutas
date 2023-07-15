@@ -8,6 +8,8 @@ use App\Models\Horario;
 use App\Models\AsignacionRuta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 
 class ApiController extends Controller
 {
@@ -287,12 +289,12 @@ class ApiController extends Controller
         $empleado = DB::table('empleados')->where('cedula',$request->cedula)->first();
         if ($empleado && $empleado['cedula'] == $request->cedula) {
             DB::table('empleados')->where('cedula',$request->cedula)->update(['clave' => $clave, 'actualizarClave' => true]); 
-            //envio de clave por correo
+            Mail::to($empleado['correo'])->send(new \App\Mail\SendEmail($empleado['nombre'], $clave, true));
             return response()->json([
                 'status' => 'success',
                 'message' => 'Email de usuario encontrado',
-                'email' => $empleado['correo'],
-                'clave' => $clave
+                'email' => $empleado['correo']
+                
             ]);
         }
 
@@ -358,17 +360,6 @@ class ApiController extends Controller
             }
         }
         
-       /* $nombreEmpleadosArray=[];
-        foreach($empleados as $empleado){
-            if(in_array ($empleado['_id'], $empleadosTurnoArray)){
-                if(isset($empleado['ubicacion'])){
-                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion']];
-                } else {
-                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido']];
-                }
-                array_push($nombreEmpleadosArray, $emp);
-            }
-        }*/
         if($ruta){
             return response()->json([
                 'status' => 'success',
