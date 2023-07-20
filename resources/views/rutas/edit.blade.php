@@ -16,7 +16,7 @@
                         <tr> 
                             <th style="padding-right:30px">Nombre</th>
                             <td>
-                                <input type="text" value="{{ $ruta->nombre }}" name="nombre" class="form-control" placeholder="Nombre">
+                                <input type="text" value="{{ $ruta->nombre }}" name="nombre" class="form-control" placeholder="Nombre" required>
                             </td>
                         </tr>
                         <tr> 

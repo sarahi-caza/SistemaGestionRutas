@@ -41,6 +41,10 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
+        $mensajes=['cedula.unique'=>'Número de cédula ya se encuentra registrado'];
+        $this->validate($request,[
+            'cedula' => 'unique:empleados,cedula'
+       ], $mensajes);
     //   request()->validate(Empleado::$rules);
         $requestData = $request->all(); 
         $requestData['actualizarClave']= true;

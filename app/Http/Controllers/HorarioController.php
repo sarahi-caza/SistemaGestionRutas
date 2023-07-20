@@ -54,6 +54,12 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
+        $horarios = DB::table('horarios')->where('area', $request->input('horario'))->where('fecha', $request->input('fecha'))->get();
+        if (count($horarios) > 0){
+            return redirect()->route('horarios.nuevo_horario',$request->input('horario'))
+            ->with('error', 'Ya existe un horario en esta fecha y area');
+        }
+        
         $area = $request->input('horario');
         $empleados = DB::table('empleados')->where('area', $area)->get();
         $fecha = $request->input('fecha');
@@ -83,6 +89,7 @@ class HorarioController extends Controller
 
         return redirect()->route('horarios.select_area')
             ->with('success', 'Horario creado con éxito.');
+
     }
     /**
      * Display the specified resource.

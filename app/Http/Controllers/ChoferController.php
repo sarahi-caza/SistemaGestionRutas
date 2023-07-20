@@ -41,7 +41,10 @@ class ChoferController extends Controller
      */
     public function store(Request $request)
     {
-    //   request()->validate(Chofer::$rules);
+        $mensajes=['cedula.unique'=>'Número de cédula ya se encuentra registrado'];
+        $this->validate($request,[
+            'cedula' => 'unique:choferes,cedula'
+       ], $mensajes);
         
         $requestData = $request->all(); 
         $requestData['actualizarClave']= true;

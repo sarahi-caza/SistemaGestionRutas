@@ -9,51 +9,58 @@
              <center>
             <h3>Datos Personales Empleado</h3><br>
             <div class="col-md-8 form-group">
+                @if (count($errors)>0)
+                    <div class= "alert alert-danger">
+                        @foreach($errors->get('cedula') as $error)
+                            {{$error}}<br>
+                        @endforeach
+                    </div>
+                @endif
                 <form action="{{ route('empleados.store') }}" method="POST">
                 @csrf
                     <table>
                         <tr> 
-                            <th style="padding-right:30px">Nombre</th>
+                            <th style="padding-right:30px">Nombre <label style='color:red'>*</label></th>
                             <td>
-                                <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                <input type="text" name="nombre" onkeypress="return soloLetras(event)" class="form-control" placeholder="Nombre" required>
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Apellido</th>
+                            <th style="padding-right:30px">Apellido <label style='color:red'>*</label></th>
                             <td>
-                                <input type="text" name="apellido" class="form-control" placeholder="Apellido">
+                                <input type="text" name="apellido" onkeypress="return soloLetras(event)" class="form-control" placeholder="Apellido" required>
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Cédula</th>
+                            <th style="padding-right:30px">Cédula <label style='color:red'>*</label></th>
                             <td>
-                                <input type="text" name="cedula" class="form-control" placeholder="Cédula" maxlength="10"> 
+                                <input type="text" name="cedula" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control" placeholder="Cédula" minlength="10" maxlength="10" required> 
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Dirección</th>
+                            <th style="padding-right:30px">Dirección <label style='color:red'>*</label></th>
                             <td>
-                                <input type="text" name="direccion" class="form-control" placeholder="Dirección">
+                                <input type="text" name="direccion" class="form-control" placeholder="Dirección" required>
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Correo Electrónico</th>
+                            <th style="padding-right:30px">Correo Electrónico <label style='color:red'>*</label></th>
                             <td>
-                                <input type="text" name="correo" class="form-control" placeholder="Correo Ëlectronico">
+                                <input type="email" name="correo" class="form-control" placeholder="nombre@ejemplo.com""" required>
                             </td>
                         </tr>
                         
                         <tr> 
-                            <th style="padding-right:30px">Celular</th>
+                            <th style="padding-right:30px">Celular <label style='color:red'>*</label></th>
                             <td>
-                                <input type="text" name="celular" class="form-control" placeholder="Celular" maxlength="10">
+                                <input type="text" name="celular" onkeypress="return event.charCode>=48 && event.charCode<=57" pattern="^09\d{8}$" class="form-control" placeholder="0987654321" minlength="10" maxlength="10" required>
                             </td>
                         </tr>
                         <tr> 
-                            <th style="padding-right:30px">Área</th>
+                            <th style="padding-right:30px">Área <label style='color:red'>*</label></th>
                             <td>
-                                <select name="area" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
-                                    <option selected>-Seleccione-</option>
+                                <select name="area" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" required>
+                                    <option value="" selected>-Seleccione-</option>
                                     <option value="TWR">TWR Torre de control</option>
                                     <option value="APP">APP Vigilancia Radar</option>
                                     <option value="MET">MET Meteorología</option>
@@ -63,8 +70,9 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="hidden" id="pwdtemp" name="clave">
-                        <br>
+                    <input type="hidden" id="pwdtemp" name="clave" required>
+                    <label style='color:red'>*</label> son campos obligatorios <br><br>
+                        
                         <a class="btn btn-info" href="{{ route('empleados.index') }}">Regresar</a>
                         <button type="submit" class="btn btn-primary" style="margin-left:100px">Guardar</button> 
                     </form>
@@ -77,5 +85,25 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script>
     $('#pwdtemp').val(Math.random().toString(36).substr(2, 6))
+</script>
+<script>
+  function soloLetras(e) {
+    var key = e.keyCode || e.which,
+      tecla = String.fromCharCode(key).toLowerCase(),
+      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz",
+      especiales = [8],
+      tecla_especial = false;
+
+    for (var i in especiales) {
+      if (key == especiales[i]) {
+        tecla_especial = true;
+        break;
+      }
+    }
+
+    if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+      return false;
+    }
+  }
 </script>
 @endsection

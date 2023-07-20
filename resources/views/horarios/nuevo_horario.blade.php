@@ -7,6 +7,11 @@
             <center>
                 <h3>Ingrese Nuevo Horario de Trabajo</h3>
                 <div class="col-md-12 form-group table-responsive">
+                @if ($message = Session::get('error'))
+                <div class="alert alert-danger">
+                    <p>{{ $message }}</p>
+                </div>
+                @endif
                 <form action="{{ route('horarios.store') }}" method="POST">
                 @csrf
                     <table>
@@ -24,7 +29,7 @@
                                     </td>
                                 <th style="padding-right:30px">Seleccione Semana</th>
                                 <td style="padding-right:30px">
-                                <input type="text" name="fecha" class="daterange form-control" style="width:200px" readonly>
+                                <input type="text" name="fecha" class="daterange form-control" style="width:200px" readonly required> 
                                 </td>
                             </tr>
 
