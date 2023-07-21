@@ -121,7 +121,7 @@
 	$('.daterange').daterangepicker({
         
     "locale": {
-        "format": "MM/DD/YYYY",
+        "format": "DD/MM/YYYY",
         "separator": " - ",
         "applyLabel": "Aplicar",
         "cancelLabel": "Cancelar",

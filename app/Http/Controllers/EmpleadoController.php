@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 
 class EmpleadoController extends Controller
 {
@@ -39,9 +41,16 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
+        $mensajes=['cedula.unique'=>'Número de cédula ya se encuentra registrado'];
+        $this->validate($request,[
+            'cedula' => 'unique:empleados,cedula'
+       ], $mensajes);
     //   request()->validate(Empleado::$rules);
-
-        $empleado = Empleado::create($request->all());
+        $requestData = $request->all(); 
+        $requestData['actualizarClave']= true;
+        $requestData['actualizarUbicacion']= true;
+        $empleado = Empleado::create($requestData);
+        Mail::to($requestData['correo'])->send(new \App\Mail\SendEmail($requestData['nombre'], $requestData['clave']));
 
         return redirect()->route('empleados.index')
             ->with('success', 'Empleado creado con éxito.');

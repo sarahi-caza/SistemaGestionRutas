@@ -15,7 +15,7 @@
                         <tr> 
                             <th style="padding-right:30px">Nombre</th>
                             <td>
-                                <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+                                <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
                             </td>
                         </tr>
                         <tr> 

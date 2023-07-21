@@ -25,7 +25,7 @@
                         <tr> 
                             <th style="padding-right:30px">Cédula</th>
                             <td>
-                            <input type="text" value="{{ $empleado->cedula }}" name="cedula" class="form-control" placeholder="Cédula" readonly>
+                            <input type="number" value="{{ $empleado->cedula }}" name="cedula" class="form-control" placeholder="Cédula" readonly>
                             </td>
                         </tr>
                         <tr> 
@@ -43,7 +43,7 @@
                         <tr> 
                             <th style="padding-right:30px">Celular</th>
                             <td>
-                                <input type="text" value="{{ $empleado->celular }}" name="celular" class="form-control" placeholder="Celular" readonly>
+                                <input type="number" value="{{ $empleado->celular }}" name="celular" class="form-control" placeholder="Celular" readonly>
                             </td>
                         </tr>
                         <tr> 

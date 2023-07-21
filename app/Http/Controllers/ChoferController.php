@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Chofer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 
 class ChoferController extends Controller
 {
@@ -39,9 +41,16 @@ class ChoferController extends Controller
      */
     public function store(Request $request)
     {
-    //   request()->validate(Chofer::$rules);
-
-        $chofer = Chofer::create($request->all());
+        $mensajes=['cedula.unique'=>'Número de cédula ya se encuentra registrado'];
+        $this->validate($request,[
+            'cedula' => 'unique:choferes,cedula'
+       ], $mensajes);
+        
+        $requestData = $request->all(); 
+        $requestData['actualizarClave']= true;
+        $requestData['actualizarUbicacion']= true;
+        $chofer = Chofer::create($requestData);
+        Mail::to($requestData['correo'])->send(new \App\Mail\SendEmail($requestData['nombre'], $requestData['clave']));
 
         return redirect()->route('choferes.index')
             ->with('success', 'Chofer creado con éxito.');

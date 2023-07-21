@@ -11,7 +11,7 @@
                         <tr> 
                         <th style="padding:40px">Área</th>
                             <td>
-                                <select id="horario" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
+                                <select id="horario" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" required>
                                     <option selected>-Seleccione-</option>
                                     <option value="{{ route('horarios.nuevo_horario', 'TWR') }}">TWR Torre de control</option>
                                     <option value="{{ route('horarios.nuevo_horario', 'APP') }}">APP Vigilancia Radar</option>
@@ -30,6 +30,7 @@
                     <p>{{ $message }}</p>
                 </div>
                 @endif
+                
             </center>
         </div>
     </div>

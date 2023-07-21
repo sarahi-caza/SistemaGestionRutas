@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model;
-
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
 
 class Chofer extends Eloquent
 {
-	//use HasFactory;
+	use SoftDeletes;
     protected $connection = 'mongodb';
 	protected $collection = 'choferes';
 
@@ -27,7 +27,10 @@ class Chofer extends Eloquent
         'celular',
         'correo',
         'sector',
-        'clave'
+        'clave',
+        'actualizarClave',
+        'actualizarUbicacion',
+        'ubicación'
     ];
 
     /**
