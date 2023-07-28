@@ -349,7 +349,23 @@ return [
         [
             'text' => 'Reportes',
             'icon' => 'fas fa-fw fa-file',
-            'url'  => '#',
+            'submenu' => [
+                [
+                    'text' => 'Por empleado',
+                    'icon'    => 'fas fa-fw fa-address-book',
+                    'url'  => 'reportes.indexEmpleado',
+                ],
+                [
+                    'text' => 'Por Chofer',
+                    'icon'    => 'fas fa-fw fa-address-card',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Por',
+                    'icon'    => 'fas fa-fw fa-address-card',
+                    'url'  => '#',
+                ],
+            ],
         ],
     ],
 
