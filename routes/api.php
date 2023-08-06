@@ -32,3 +32,4 @@ Route::post('listaRecorrido', [ApiController::class, 'listaRecorrido'])->middlew
 Route::post('ubicacionCasa', [ApiController::class, 'ubicacionCasa'])->middleware('auth:sanctum');
 Route::post('olvidoClave', [ApiController::class, 'olvidoClave']);
 Route::post('listaRecorridoChofer', [ApiController::class, 'listaRecorridoChofer'])->middleware('auth:sanctum');
+Route::post('actualizarTiempoReal', [ApiController::class, 'actualizarTiempoReal'])->middleware('auth:sanctum');

@@ -31,7 +31,8 @@ class Empleado extends Eloquent
         'clave',
         'actualizarClave',
         'actualizarUbicacion',
-        'ubicación'
+        'ubicacion',
+        'tokenCelular'
     ];
 
     /**

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use App\Models\Ruta;
+use App\Models\Chofer;
+use App\Models\Empleado;
 
 class ReporteController extends Controller
 {
@@ -19,8 +21,9 @@ class ReporteController extends Controller
         $rutas = DB::table('rutas')->get();
         $ruta='';
         $area='';
+        $estado='';
 
-        return view('reportes.empleados.index', ['rutas' => $rutas, 'ruta' => $ruta, 'area' => $area]);
+        return view('reportes.empleados.index', ['rutas' => $rutas, 'ruta' => $ruta, 'area' => $area, 'estado' => $estado]);
     }
 
     /**
@@ -35,6 +38,7 @@ class ReporteController extends Controller
         //filtros
         $area = $request->input('area');
         $ruta = $request->input('ruta');
+        $estado = $request->input('estado');
 
         $areas = [
             'TWR' => 'TWR Torre de control',
@@ -50,18 +54,86 @@ class ReporteController extends Controller
             $rutaDb = DB::table('rutas')->where('_id', $ruta)->first();
             $asigRutas = DB::table('asig_rutas')->where('id_ruta', $rutaDb['_id'])->first();
            if ($area != '') {
-                $empleadosRep = DB::table('empleados')->whereIn('_id', $asigRutas['id_empleado'])->where('area', $area)->get();        
+                if($estado != ''){
+                    $empleadosRep = Empleado::whereIn('_id', $asigRutas['id_empleado'])->where('area', $area)->get();
+                }else{
+                    $empleadosRep = Empleado::withTrashed()->whereIn('_id', $asigRutas['id_empleado'])->where('area', $area)->get();
+                }
             } else {
-                $empleadosRep = DB::table('empleados')->whereIn('_id', $asigRutas['id_empleado'])->get();
+                if($estado != ''){
+                    $empleadosRep = Empleado::whereIn('_id', $asigRutas['id_empleado'])->get();
+                }else{
+                    $empleadosRep = Empleado::withTrashed()->whereIn('_id', $asigRutas['id_empleado'])->get();
+                }
+                
             }
-            //$empleadosRep = $asigRutas['id_empleado'];
         } else if ($area != '') {
             //empleados por area
-            $empleadosRep = DB::table('empleados')->where('area', $area)->get();
+            if($estado != ''){
+                $empleadosRep = Empleado::where('area', $area)->get();
+            }else{
+                $empleadosRep = Empleado::withTrashed()->where('area', $area)->get();
+            }
+            
         } else {
-            $empleadosRep = DB::table('empleados')->get();
+            if($estado !=''){
+                $empleadosRep = Empleado::get();
+            }else{
+                $empleadosRep = Empleado::withTrashed()->get();
+            }
+            
         }
 
-        return view('reportes.empleados.index', ['empleadosRep' => $empleadosRep, 'rutas' => $rutas, 'areas' => $areas, 'rutaDb' => $rutaDb, 'area' => $area, 'ruta' => $ruta]);
+        return view('reportes.empleados.index', ['empleadosRep' => $empleadosRep, 'rutas' => $rutas, 'areas' => $areas, 'rutaDb' => $rutaDb, 'area' => $area, 'ruta' => $ruta, 'estado' => $estado]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexChofer(): View
+    {
+        $sector='';
+        $estado='';
+                
+        return view('reportes.choferes.index', ['sector' => $sector, 'estado' => $estado]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reporteChofer (Request $request): View
+    {
+        //filtros
+        $sector = $request->input('sector');
+        $estado = $request->input('estado');
+
+        $sectores = [
+            'Norte' => 'Norte',
+            'Sur' => 'Sur',
+            'Centro' => 'Centro',
+            'Valle' => 'Valle',
+            ];
+        
+        //choferes por sector
+        if ($sector != '') {
+            if($estado != ''){
+                $choferesRep= Chofer::where('sector', $sector)->get();
+            }else{
+                $choferesRep= Chofer::where('sector', $sector)->withTrashed()->get();
+            }   
+        }else{
+            if($estado != ''){
+                $choferesRep= Chofer::get();
+            }else{
+                $choferesRep = Chofer::withTrashed()->get();
+            }
+        }
+        
+        return view('reportes.choferes.index', ['choferesRep' => $choferesRep, 'sector' => $sector, 'sectores' => $sectores, 'estado' => $estado]);
     }
 }

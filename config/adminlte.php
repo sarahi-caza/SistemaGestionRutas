@@ -358,7 +358,7 @@ return [
                 [
                     'text' => 'Por Chofer',
                     'icon'    => 'fas fa-fw fa-address-card',
-                    'url'  => '#',
+                    'url'  => 'reportes.indexChofer',
                 ],
                 [
                     'text' => 'Por',

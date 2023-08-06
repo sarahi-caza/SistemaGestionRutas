@@ -80,14 +80,14 @@ class ApiController extends Controller
     public function actualizarPwd(Request $request)
     {
         if($request->rol == 'empleado'){
-            $empleado = DB::table('empleados')->where('_id',$request->id_usuario)->update(['clave' => $request->newPwd, 'actualizarClave' => false]); 
+            $empleado = DB::table('empleados')->where('_id',$request->id_usuario)->update(['clave' => $request->newPwd, 'actualizarClave' => false, 'tokenCelular' => $request->tokenCelular]); 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Contraseña actualizada exitosamente'
             ]);
         }
         elseif($request->rol == 'chofer'){
-            $chofer = DB::table('choferes')->where('_id',$request->id_usuario)->update(['clave' => $request->newPwd, 'actualizarClave' => false]);
+            $chofer = DB::table('choferes')->where('_id',$request->id_usuario)->update(['clave' => $request->newPwd, 'actualizarClave' => false, 'tokenCelular' => $request->tokenCelular]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Contraseña actualizada exitosamente'
@@ -214,9 +214,9 @@ class ApiController extends Controller
         foreach($empleados as $empleado){
             if(in_array ($empleado['_id'], $empleadosTurnoArray)){
                 if(isset($empleado['ubicacion'])){
-                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion']];
+                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion'], 'tokenCelular' => $empleado['tokenCelular']];
                 } else {
-                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido']];
+                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'tokenCelular' => $empleado['tokenCelular']];
                 }
                 array_push($nombreEmpleadosArray, $emp);
             }
@@ -224,7 +224,9 @@ class ApiController extends Controller
         $chofer = DB::table('choferes')->where('_id', $ruta['chofer'])->first();
         if($chofer && $ruta){
             $ubicacionChofer=[];
-            if(isset($chofer['ubicacion'])){
+            if(isset($chofer['tiempoReal'])){
+                $ubicacionChofer= $chofer['tiempoReal'];
+            } else if(isset($chofer['ubicacion'])){
                 $ubicacionChofer= $chofer['ubicacion'];
             }
             return response()->json([
@@ -364,9 +366,10 @@ class ApiController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Datos de ruta encontrados',
-                'lista_matutina' => count($empMatutinoArray),
-                'lista_nocturna' => count($empNocturnoArray),
-                'nombre_ruta' => $ruta['nombre']
+                'lista_matutina' => $empMatutinoArray,
+                'lista_nocturna' => $empNocturnoArray,
+                'nombre_ruta' => $ruta['nombre'],
+                'fecha' => strtotime(date('d-m-Y')),
             ]);
         }
         return response()->json([
@@ -376,5 +379,31 @@ class ApiController extends Controller
         
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function actualizarTiempoReal(Request $request)
+    {
+        $idChofer=$request->id_usuario;
+        $ubicacionTiempoReal= [
+            'latitud' => floatval($request->latitud),
+            'longitud' => floatval($request->longitud),
+        ];
+        if ($idChofer && $ubicacionTiempoReal['latitud'] != null) {
+            DB::table('choferes')->where('_id',$idChofer)->update(['tiempoReal' => $ubicacionTiempoReal]); 
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Tiempo Real Actualizado',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Ubicación o chofer no encontrado',
+            ], 400);
+    }
 }
 

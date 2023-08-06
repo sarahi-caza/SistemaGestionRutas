@@ -30,7 +30,9 @@ class Chofer extends Eloquent
         'clave',
         'actualizarClave',
         'actualizarUbicacion',
-        'ubicación'
+        'ubicacion',
+        'tiempoReal',
+        'tokenCelular' 
     ];
 
     /**

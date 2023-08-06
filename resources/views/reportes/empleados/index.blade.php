@@ -30,6 +30,13 @@
                                     <option value="{{$rut['_id']}}" @if($ruta == $rut['_id']) selected @endif>{{$rut['nombre'] }}</option>
                                 @endforeach
                         </td>
+                        <th style="padding-left:30px; padding-right:15px">Estado</th>
+                        <td style="padding-top:15px">
+                            <select id="estado" name="estado" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example">
+                                <option value="">Todos</option>
+                                <option value="A" @if($estado == "A") selected @endif>Activo</option>
+                            </select>
+                        </td>
                         <td style="padding-left:60px; margin-bottom:5px">
                             <button id="consultar" type="submit" class="btn btn-primary">Consultar</button>
                         </td>
@@ -53,6 +60,7 @@
                                 @if($rutaDb != null)
                                 <th>Ruta</th>
                                 @endif
+                                <th>Estado</th>
                             </thead>
                         </tr>
                         @foreach($empleadosRep as $emp)
@@ -68,6 +76,13 @@
                             @if($rutaDb != null)
                             <td>{{$rutaDb['nombre']}}</td>
                             @endif
+                            <td>
+                                @if(isset($emp['deleted_at']))
+                                    Inactivo
+                                @else
+                                    Activo
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                         </table>

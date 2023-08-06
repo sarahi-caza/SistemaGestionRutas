@@ -48,3 +48,6 @@ Route::resource('horarios', HorarioController::class);
 // para reportes
 Route::get('/reportes.indexEmpleado', [ReporteController::class, 'indexEmpleado'])->name('reportes.indexEmpleado');
 Route::post('/reportes.reporteEmpleado', [ReporteController::class, 'reporteEmpleado'])->name('reportes.reporteEmpleado');
+
+Route::get('/reportes.indexChofer', [ReporteController::class, 'indexChofer'])->name('reportes.indexChofer');
+Route::post('/reportes.reporteChofer', [ReporteController::class, 'reporteChofer'])->name('reportes.reporteChofer');
