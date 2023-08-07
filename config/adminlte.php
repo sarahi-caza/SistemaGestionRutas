@@ -361,9 +361,9 @@ return [
                     'url'  => 'reportes.indexChofer',
                 ],
                 [
-                    'text' => 'Por',
+                    'text' => 'Confirmación por Rutas',
                     'icon'    => 'fas fa-fw fa-address-card',
-                    'url'  => '#',
+                    'url'  => 'reportes.indexConfirmacion',
                 ],
             ],
         ],

@@ -214,9 +214,18 @@ class ApiController extends Controller
         foreach($empleados as $empleado){
             if(in_array ($empleado['_id'], $empleadosTurnoArray)){
                 if(isset($empleado['ubicacion'])){
-                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion'], 'tokenCelular' => $empleado['tokenCelular']];
+                    if(isset($empleado['tokenCelular'])){
+                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion'], 'tokenCelular' => $empleado['tokenCelular']];
+                    }else{
+                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion']];
+                    }
                 } else {
-                    $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'tokenCelular' => $empleado['tokenCelular']];
+                    if(isset($empleado['tokenCelular'])){
+                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'tokenCelular' => $empleado['tokenCelular']];
+                    }else{
+                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido']];
+                    }
+                    
                 }
                 array_push($nombreEmpleadosArray, $emp);
             }

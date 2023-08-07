@@ -51,3 +51,6 @@ Route::post('/reportes.reporteEmpleado', [ReporteController::class, 'reporteEmpl
 
 Route::get('/reportes.indexChofer', [ReporteController::class, 'indexChofer'])->name('reportes.indexChofer');
 Route::post('/reportes.reporteChofer', [ReporteController::class, 'reporteChofer'])->name('reportes.reporteChofer');
+
+Route::get('/reportes.indexConfirmacion', [ReporteController::class, 'indexConfirmacion'])->name('reportes.indexConfirmacion');
+Route::post('/reportes.reporteConfirmacion', [ReporteController::class, 'reporteConfirmacion'])->name('reportes.reporteConfirmacion');

@@ -29,6 +29,7 @@
                                 @foreach($rutas as $rut)
                                     <option value="{{$rut['_id']}}" @if($ruta == $rut['_id']) selected @endif>{{$rut['nombre'] }}</option>
                                 @endforeach
+                            </select>
                         </td>
                         <th style="padding-left:30px; padding-right:15px">Estado</th>
                         <td style="padding-top:15px">

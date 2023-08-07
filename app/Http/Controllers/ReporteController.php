@@ -136,4 +136,37 @@ class ReporteController extends Controller
         
         return view('reportes.choferes.index', ['choferesRep' => $choferesRep, 'sector' => $sector, 'sectores' => $sectores, 'estado' => $estado]);
     }
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexConfirmacion(): View
+    {
+        $rutas = DB::table('rutas')->get();
+        $ruta='';
+        $semanas= DB::table('horarios')->select('fecha')->distinct()->get();
+        $semana='';
+
+        return view('reportes.confirmacion.index', ['rutas' => $rutas, 'ruta' => $ruta, 'semanas' => $semanas, 'semana' => $semana]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reporteConfirmacion (Request $request): View
+    {
+        $rutas = DB::table('rutas')->get();
+        $ruta=$request->input('ruta');
+        $semanas= DB::table('horarios')->select('fecha')->distinct()->get();
+        $semana=$request->input('semana');
+
+        return view('reportes.confirmacion.index', ['rutas' => $rutas, 'ruta' => $ruta, 'semanas' => $semanas, 'semana' => $semana]);
+    
+    }
+
 }
