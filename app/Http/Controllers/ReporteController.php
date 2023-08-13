@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use App\Models\Ruta;
 use App\Models\Chofer;
 use App\Models\Empleado;
+use App\Models\ConfirmacionRuta;
 
 class ReporteController extends Controller
 {
@@ -165,7 +166,37 @@ class ReporteController extends Controller
         $semanas= DB::table('horarios')->select('fecha')->distinct()->get();
         $semana=$request->input('semana');
 
-        return view('reportes.confirmacion.index', ['rutas' => $rutas, 'ruta' => $ruta, 'semanas' => $semanas, 'semana' => $semana]);
+        if ($ruta != ''){
+            $rutaDb = DB::table('rutas')->where('_id', $ruta)->first();
+            $asigRuta = DB::table('asig_rutas')->where('id_ruta', $rutaDb['_id'])->first();
+             
+            $confirmRuta = ConfirmacionRuta::where('id_asig_ruta', $asigRuta['_id'])->where('semana',$semana)->get();
+            
+        }else{
+            $confirmRuta = ConfirmacionRuta::where('semana',$semana)->get();
+        }
+
+        $empleados = DB::table('empleados')->get();
+        $empleadosArray = [];
+        foreach($empleados as $emp){
+            $empleadosArray = array_merge($empleadosArray, array((string)$emp['_id'] => $emp['nombre'].' '.$emp['apellido']));
+        }
+
+        $asigRutas = DB::table('asig_rutas')->get();
+        $rutasArray = [];
+        foreach($asigRutas as $ar){
+            foreach ($rutas as $rut) {
+                if($rut['_id'] == $ar['id_ruta']){
+                    $rutasArray = array_merge($rutasArray, array((string)$ar['_id'] => $rut['nombre']));
+        
+                }
+            }
+        }
+            
+        
+        
+
+        return view('reportes.confirmacion.index', ['rutas' => $rutas, 'ruta' => $ruta, 'semanas' => $semanas, 'semana' => $semana, 'confirmRuta' => $confirmRuta, 'empleadosArray' => $empleadosArray, 'rutasArray' => $rutasArray]);
     
     }
 

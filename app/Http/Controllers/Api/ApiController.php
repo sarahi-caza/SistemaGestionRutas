@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\EmpleadoResource;
 use App\Models\Horario;
 use App\Models\AsignacionRuta;
+use App\Models\ConfirmacionRuta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -215,15 +216,15 @@ class ApiController extends Controller
             if(in_array ($empleado['_id'], $empleadosTurnoArray)){
                 if(isset($empleado['ubicacion'])){
                     if(isset($empleado['tokenCelular'])){
-                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion'], 'tokenCelular' => $empleado['tokenCelular']];
+                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion'], 'tokenCelular' => $empleado['tokenCelular'], 'id_usuario' => (string) $empleado['_id']];
                     }else{
-                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion']];
+                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'ubicacion'=>$empleado['ubicacion'], 'id_usuario' => (string) $empleado['_id']];
                     }
                 } else {
                     if(isset($empleado['tokenCelular'])){
-                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'tokenCelular' => $empleado['tokenCelular']];
+                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'tokenCelular' => $empleado['tokenCelular'], 'id_usuario' => (string) $empleado['_id']];
                     }else{
-                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido']];
+                        $emp= ['nombre'=>$empleado['nombre'].' '.$empleado['apellido'], 'id_usuario' => (string) $empleado['_id']];
                     }
                     
                 }
@@ -414,5 +415,116 @@ class ApiController extends Controller
             'message' => 'Ubicación o chofer no encontrado',
             ], 400);
     }
+/**
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function choferConfirmacion(Request $request)
+    {
+        $asigRutas = DB::table('asig_rutas')->get(); 
+        
+        $asigRutaActual = new AsignacionRuta();
+        foreach ($asigRutas as $ar){
+            foreach ($ar['id_empleado'] as $emp) {
+                if((string) $emp == $request->id_usuario){
+                    $asigRutaActual = $ar;
+                    break;
+                }
+            }
+        }
+        $horarios = DB::table('horarios')->get();
+        $horarioConfirmacion = new Horario();
+        foreach ($horarios as $horario){
+            $arrayFecha= explode(' - ', $horario['fecha']);
+            $arrayFechaInicio= explode('/', $arrayFecha[0]);
+            $fechaInicio= mktime(0,0,0,$arrayFechaInicio[1],$arrayFechaInicio[0],$arrayFechaInicio[2]);
+            $arrayFechaFin= explode('/', $arrayFecha[1]);
+            $fechaFin= mktime(0,0,0,$arrayFechaFin[1],$arrayFechaFin[0],$arrayFechaFin[2]);
+            $fechaActual = strtotime(date('d-m-Y'));
+            
+            if($fechaInicio <= $fechaActual && $fechaFin >= $fechaActual){
+                $horarioConfirmacion = $horario;
+                break;
+            }
+        }
+        $semanaConfirmacion = $horario['fecha'];
+        $confirmRuta = DB::table('confirm_rutas')->where('id_asig_ruta', $asigRutaActual['_id'])->where('semana',$semanaConfirmacion)->first();
+        if($confirmRuta == null){
+            $confirmRuta = ConfirmacionRuta::create(
+                [
+                    'id_asig_ruta' => $asigRutaActual['_id'],
+                    'semana' => $semanaConfirmacion,
+                    'confirmacion_empleado' => []
+                ]
+            );
+        }
+        $boolConfirmacion = $request->confirmacion == 'true' ? true : false;
+        $empleadosArray = [];
+        $confirmacionEmpleado = $confirmRuta['confirmacion_empleado'];  
+        foreach($confirmacionEmpleado as $confirmEmp){
+            if(isset($confirmEmp['empleado'])){
+                array_push($empleadosArray, $confirmEmp['empleado']);
+            }
+        }   
+        if(!in_array($request->id_usuario, $empleadosArray)){
+            $confirmEmpleado = (object) [
+                'empleado' => $request->id_usuario,
+                'lunes' => null,
+                'martes' => null,
+                'miercoles' => null,
+                'jueves' => null,
+                'viernes' => null,
+                'sabado' => null,
+                'domingo' => null,
+            ];
+            $dia = $request->dia; 
+            $confirmEmpleado->$dia = $boolConfirmacion;
+        }else{
+            foreach($confirmacionEmpleado as $confirmEmp){
+                if(isset($confirmEmp['empleado']) && $confirmEmp['empleado'] == $request->id_usuario){
+                    $confirmEmpleado = $confirmEmp;
+                    break;
+                }
+            }
+            $dia = $request->dia; 
+            $confirmEmpleado[$dia] = $boolConfirmacion;
+        }
+        $insertar = true;
+        if(count($confirmacionEmpleado)>0){
+            $newconfirmacionEmpleado = [];
+            foreach($confirmacionEmpleado as $confirmEmp){
+                if(isset($confirmEmp['empleado']) && $confirmEmp['empleado'] == $request->id_usuario){
+                    array_push($newconfirmacionEmpleado, $confirmEmpleado);
+                }else{
+                    array_push($newconfirmacionEmpleado, $confirmEmp);
+                }
+            }
+            $confirmacionEmpleado = $newconfirmacionEmpleado;
+        }else{
+            array_push($confirmacionEmpleado, $confirmEmpleado);
+            $insertar= false;
+        }
+        if($insertar && !in_array($request->id_usuario, $empleadosArray)){
+            array_push($confirmacionEmpleado, $confirmEmpleado);   
+        }
+        $confirmRuta = ConfirmacionRuta::where('id_asig_ruta', $asigRutaActual['_id'])->where('semana',$semanaConfirmacion)->first();
+
+        $confirmRuta->update([
+            'confirmacion_empleado' => $confirmacionEmpleado,
+        ]);
+        
+        return response()->json([
+            'status' => 'success',
+            'message' => 'confirmacion registrada con éxito',
+            
+            ], 200);
+
+ 
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Datos de ruta no actualizados',
+            ], 400);
+    }
+
 }
 
