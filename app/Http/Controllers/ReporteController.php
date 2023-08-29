@@ -9,6 +9,7 @@ use App\Models\Ruta;
 use App\Models\Chofer;
 use App\Models\Empleado;
 use App\Models\ConfirmacionRuta;
+use PDF;
 
 class ReporteController extends Controller
 {
@@ -47,9 +48,27 @@ class ReporteController extends Controller
             'MET' => 'MET Meteorología',
             'OPS' => 'OPS Operaciones',
             'AIS' => 'AIS Información de Vuelo',
-            ];
+        ];
         
-            $rutaDb=null;
+        $rutaDb=null;
+
+        $empleadosRep=$this->obtenerReporteEmpleado ($area, $ruta, $estado);
+        return view('reportes.empleados.index', ['empleadosRep' => $empleadosRep, 'rutas' => $rutas, 'areas' => $areas, 'rutaDb' => $rutaDb, 'area' => $area, 'ruta' => $ruta, 'estado' => $estado]);
+    }
+
+    public function obtenerReporteEmpleado ($area, $ruta, $estado)
+    {
+        $rutas = DB::table('rutas')->get();
+       
+        $areas = [
+            'TWR' => 'TWR Torre de control',
+            'APP' => 'APP Vigilancia Radar',
+            'MET' => 'MET Meteorología',
+            'OPS' => 'OPS Operaciones',
+            'AIS' => 'AIS Información de Vuelo',
+        ];
+        
+        $rutaDb=null;
         //empleados por ruta
         if ($ruta != '') {
             $rutaDb = DB::table('rutas')->where('_id', $ruta)->first();
@@ -85,7 +104,38 @@ class ReporteController extends Controller
             
         }
 
-        return view('reportes.empleados.index', ['empleadosRep' => $empleadosRep, 'rutas' => $rutas, 'areas' => $areas, 'rutaDb' => $rutaDb, 'area' => $area, 'ruta' => $ruta, 'estado' => $estado]);
+        return $empleadosRep;
+    }
+    
+    public function crearEmpleadoPDF($area='area', $ruta='ruta', $estado='estado'){
+        if($area=='area'){
+            $area='';
+        }
+        if($ruta=='ruta'){
+            $ruta='';
+        }
+        if($estado=='estado'){
+            $estado='';
+        }
+        $empleadosRep=$this->obtenerReporteEmpleado ($area, $ruta, $estado);
+        $areas = [
+            'TWR' => 'TWR Torre de control',
+            'APP' => 'APP Vigilancia Radar',
+            'MET' => 'MET Meteorología',
+            'OPS' => 'OPS Operaciones',
+            'AIS' => 'AIS Información de Vuelo',
+        ];
+        $rutaDb=null;
+        if ($ruta != '') {
+            $rutaDb = DB::table('rutas')->where('_id', $ruta)->first();
+        }
+        view()->share('empleadosRep', $empleadosRep);
+        view()->share('rutaDb', $rutaDb);
+        view()->share('areas', $areas);
+        view()->share('area', $area);
+        
+        $pdf = PDF::loadView('reportes.empleados.reporte', (array) $empleadosRep);
+        return $pdf->download('reporteEmpleados.pdf');
     }
 
     /**
@@ -120,6 +170,20 @@ class ReporteController extends Controller
             'Valle' => 'Valle',
             ];
         
+        $choferesRep=$this->obtenerReporteChofer($sector, $estado);
+        
+        return view('reportes.choferes.index', ['choferesRep' => $choferesRep, 'sector' => $sector, 'sectores' => $sectores, 'estado' => $estado]);
+    }
+
+    public function obtenerReporteChofer ($sector, $estado)
+    {
+        $sectores = [
+            'Norte' => 'Norte',
+            'Sur' => 'Sur',
+            'Centro' => 'Centro',
+            'Valle' => 'Valle',
+            ];
+        
         //choferes por sector
         if ($sector != '') {
             if($estado != ''){
@@ -134,9 +198,22 @@ class ReporteController extends Controller
                 $choferesRep = Chofer::withTrashed()->get();
             }
         }
-        
-        return view('reportes.choferes.index', ['choferesRep' => $choferesRep, 'sector' => $sector, 'sectores' => $sectores, 'estado' => $estado]);
+        return $choferesRep;
     }
+    
+    public function crearChoferPDF($sector='sector', $estado='estado'){
+        if($sector=='sector'){
+            $sector='';
+        }
+        if($estado=='estado'){
+            $estado='';
+        }
+        $choferesRep=$this->obtenerReporteChofer($sector, $estado);
+        view()->share('choferesRep', $choferesRep);
+        $pdf = PDF::loadView('reportes.choferes.reporte', (array) $choferesRep);
+        return $pdf->download('reporteChofer.pdf');
+    }
+
 
         /**
      * Display a listing of the resource.
@@ -166,6 +243,22 @@ class ReporteController extends Controller
         $semanas= DB::table('horarios')->select('fecha')->distinct()->get();
         $semana=$request->input('semana');
 
+        $confirmRuta=$this->obtenerReporteConfirmacion($semana, $ruta);
+        $empleados = DB::table('empleados')->get();
+        $empleadosArray = [];
+        foreach($empleados as $emp){
+            $empleadosArray = array_merge($empleadosArray, array((string)$emp['_id'] => $emp['nombre'].' '.$emp['apellido']));
+        }
+        $rutasArray=$this->obtenerListaRutasConfirmacion($rutas);
+        
+        return view('reportes.confirmacion.index', ['rutas' => $rutas, 'ruta' => $ruta, 'semanas' => $semanas, 'semana' => $semana, 'confirmRuta' => $confirmRuta, 'empleadosArray' => $empleadosArray, 'rutasArray' => $rutasArray]);
+    }
+    
+    public function obtenerReporteConfirmacion ($semana, $ruta)
+    {
+        $rutas = DB::table('rutas')->get();
+        $semanas= DB::table('horarios')->select('fecha')->distinct()->get();
+        
         if ($ruta != ''){
             $rutaDb = DB::table('rutas')->where('_id', $ruta)->first();
             $asigRuta = DB::table('asig_rutas')->where('id_ruta', $rutaDb['_id'])->first();
@@ -175,13 +268,11 @@ class ReporteController extends Controller
         }else{
             $confirmRuta = ConfirmacionRuta::where('semana',$semana)->get();
         }
+        return $confirmRuta;
+    }
 
-        $empleados = DB::table('empleados')->get();
-        $empleadosArray = [];
-        foreach($empleados as $emp){
-            $empleadosArray = array_merge($empleadosArray, array((string)$emp['_id'] => $emp['nombre'].' '.$emp['apellido']));
-        }
-
+    public function obtenerListaRutasConfirmacion($rutas){
+        
         $asigRutas = DB::table('asig_rutas')->get();
         $rutasArray = [];
         foreach($asigRutas as $ar){
@@ -192,12 +283,30 @@ class ReporteController extends Controller
                 }
             }
         }
-            
-        
-        
-
-        return view('reportes.confirmacion.index', ['rutas' => $rutas, 'ruta' => $ruta, 'semanas' => $semanas, 'semana' => $semana, 'confirmRuta' => $confirmRuta, 'empleadosArray' => $empleadosArray, 'rutasArray' => $rutasArray]);
-    
+        return $rutasArray;
     }
 
+
+    public function crearConfirmacionPDF($semana, $ruta='ruta'){
+        $semana=str_replace('.','/',$semana);
+        if($ruta=='ruta'){
+            $ruta='';
+        }
+        $rutas = DB::table('rutas')->get();
+        $confirmRuta=$this->obtenerReporteConfirmacion($semana, $ruta);
+        $empleados = DB::table('empleados')->get();
+        $empleadosArray = [];
+        foreach($empleados as $emp){
+            $empleadosArray = array_merge($empleadosArray, array((string)$emp['_id'] => $emp['nombre'].' '.$emp['apellido']));
+        }
+        $rutasArray=$this->obtenerListaRutasConfirmacion($rutas);
+        view()->share('confirmRuta', $confirmRuta);
+        view()->share('empleadosArray', $empleadosArray);
+        view()->share('rutasArray', $rutasArray);
+        view()->share('semana', $semana);
+        $pdf = PDF::loadView('reportes.confirmacion.reporte', (array) $confirmRuta);
+        
+        return $pdf->download('reporteConfirmacion.pdf');
+    }
+    
 }

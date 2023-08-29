@@ -54,3 +54,7 @@ Route::post('/reportes.reporteChofer', [ReporteController::class, 'reporteChofer
 
 Route::get('/reportes.indexConfirmacion', [ReporteController::class, 'indexConfirmacion'])->name('reportes.indexConfirmacion');
 Route::post('/reportes.reporteConfirmacion', [ReporteController::class, 'reporteConfirmacion'])->name('reportes.reporteConfirmacion');
+//descargar PDF
+Route::get('/reportes.reporteChoferPdf/{sector?}/{estado?}', [ReporteController::class, 'crearChoferPDF'])->name('reportes.reporteChoferPdf');
+Route::get('/reportes.reporteEmpleadoPdf/{area?}/{ruta?}/{estado?}', [ReporteController::class, 'crearEmpleadoPDF'])->name('reportes.reporteEmpleadoPdf');
+Route::get('/reportes.reporteConfirmacionPdf/{semana?}/{ruta?}', [ReporteController::class, 'crearConfirmacionPDF'])->name('reportes.reporteConfirmacionPdf');

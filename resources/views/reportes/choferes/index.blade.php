@@ -64,13 +64,22 @@
                             <td>{{$chof['created_at']->toDateTime()->format('M Y')}}</td>
                         </tr>
                         @endforeach
-                        </table>
+                    </table>
+                    @if($sector=='' && $estado=='')
+                    <a href="{{ route('reportes.reporteChoferPdf')}}">
+                    @elseif($estado=='')
+                    <a href="{{ route('reportes.reporteChoferPdf')}}/{{$sector}}/estado">
+                    @elseif($sector=='')
+                    <a href="{{ route('reportes.reporteChoferPdf')}}/sector/{{$estado}}">
+                    @else
+                    <a href="{{ route('reportes.reporteChoferPdf')}}/{{$sector}}/{{$estado}}">
                     @endif
+                        <button id="descargar" type="button" class="btn btn-success">Descargar PDF</button>
+                    </a>
+                @endif
                 </div>
-                  
             </form>
             </center>
-            
         </div>
     </div>
 </div>

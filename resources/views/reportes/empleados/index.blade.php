@@ -87,8 +87,27 @@
                         </tr>
                         @endforeach
                         </table>
+                        @if($area=='' && $ruta=='' && $estado=='')
+                        <a href="{{ route('reportes.reporteEmpleadoPdf') }}">
+                        @elseif($area=='' && $ruta=='')
+                        <a href="{{ route('reportes.reporteEmpleadoPdf') }}/area/ruta/{{$estado}}">
+                        @elseif($area=='' && $estado=='')
+                        <a href="{{ route('reportes.reporteEmpleadoPdf') }}/area/{{$ruta}}/estado">
+                        @elseif($estado=='' && $ruta=='')
+                        <a href="{{ route('reportes.reporteEmpleadoPdf') }}/{{$area}}/ruta/estado">
+                        @elseif($area=='')
+                        <a href="{{ route('reportes.reporteEmpleadoPdf') }}/area/{{$ruta}}/{{$estado}}">
+                        @elseif($ruta=='')
+                        <a href="{{ route('reportes.reporteEmpleadoPdf') }}/{{$area}}/ruta/{{$estado}}">
+                        @elseif($estado=='')
+                        <a href="{{ route('reportes.reporteEmpleadoPdf') }}/{{$area}}/{{$ruta}}/estado">
+                        @else
+                        <a href="{{ route('reportes.reporteEmpleadoPdf') }}/{{$area}}/{{$ruta}}/{{$estado}}">
+                        @endif
+                            <button id="descargar" type="button" class="btn btn-success">Descargar PDF</button>
+                        </a>
                     @endif
-                                    </div>
+                </div>
                   
             </form>
             </center>

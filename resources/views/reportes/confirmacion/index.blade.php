@@ -73,6 +73,10 @@
                         @endforeach
                         
                     </table>
+                    
+                    <a href="{{ route('reportes.reporteConfirmacionPdf') }}/{{str_replace('/','.',$semana)}}/{{$ruta}}">
+                        <button id="descargar" type="button" class="btn btn-success">Descargar PDF</button>
+                    </a>
                 @endif
                 </div>
                   
