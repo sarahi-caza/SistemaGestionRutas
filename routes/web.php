@@ -5,6 +5,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ChoferController;
 use App\Http\Controllers\RutaController;
 use App\Http\Controllers\HorarioController;
+use App\Http\Controllers\ReporteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,17 @@ Route::resource('empleados', EmpleadoController::class);
 Route::resource('choferes', ChoferController::class);
 Route::resource('rutas', RutaController::class);
 Route::resource('horarios', HorarioController::class);
+
+// para reportes
+Route::get('/reportes.indexEmpleado', [ReporteController::class, 'indexEmpleado'])->name('reportes.indexEmpleado');
+Route::post('/reportes.reporteEmpleado', [ReporteController::class, 'reporteEmpleado'])->name('reportes.reporteEmpleado');
+
+Route::get('/reportes.indexChofer', [ReporteController::class, 'indexChofer'])->name('reportes.indexChofer');
+Route::post('/reportes.reporteChofer', [ReporteController::class, 'reporteChofer'])->name('reportes.reporteChofer');
+
+Route::get('/reportes.indexConfirmacion', [ReporteController::class, 'indexConfirmacion'])->name('reportes.indexConfirmacion');
+Route::post('/reportes.reporteConfirmacion', [ReporteController::class, 'reporteConfirmacion'])->name('reportes.reporteConfirmacion');
+//descargar PDF
+Route::get('/reportes.reporteChoferPdf/{sector?}/{estado?}', [ReporteController::class, 'crearChoferPDF'])->name('reportes.reporteChoferPdf');
+Route::get('/reportes.reporteEmpleadoPdf/{area?}/{ruta?}/{estado?}', [ReporteController::class, 'crearEmpleadoPDF'])->name('reportes.reporteEmpleadoPdf');
+Route::get('/reportes.reporteConfirmacionPdf/{semana?}/{ruta?}', [ReporteController::class, 'crearConfirmacionPDF'])->name('reportes.reporteConfirmacionPdf');
